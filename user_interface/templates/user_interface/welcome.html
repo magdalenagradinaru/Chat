@@ -1,0 +1,84 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagina Principală</title>
+
+<!-- CSS Bootstrap -->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+<!-- CSS Personalizat -->
+    <link href="{% static 'css/styles1.css' %}" rel="stylesheet">
+
+</head>
+<body>
+    <header class="bg-dark text-white py-3">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+<!-- -->
+<!-- Bara de navigare -->
+                <div class="logo fs-4 fw-bold">Comunitatea IT</div>
+                <nav>
+                    <a href="{% url 'welcome' %}" class="text-white me-3">Acasă</a>
+                    <a href="{% url 'forum' %}" class="text-white me-3">Forum</a>
+                    <a href="{% url 'resources' %}" class="text-white me-3">Resurse</a>
+                    <a href="{% url 'contact' %}" class="text-white">Contact</a>
+                </nav>
+                <div>
+                    <span class="text-white me-3">Bun venit, {{ request.user.username }}!</span>
+
+<!-- Formular de delogare -->
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Delogare</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </header>
+
+<!-- Conținutul paginii -->
+    <main class="container mt-4">
+        <h1>Pagina Principală</h1>
+    </main>
+
+<!-- Footer -->
+    <footer class="bg-dark text-white py-4 mt-4">
+        <div class="container text-center">
+            <p>&copy; 2025 Comunitatea IT. Toate drepturile rezervate.</p>
+        </div>
+    </footer>
+
+
+<!-- Specificațiile chatbot-ului -->
+
+<!-- Imagine pentru chatbot -->
+    <div id="chatbot-icon" title="Deschide chatbot-ul"></div>
+
+<!-- Fereastra chatbot -->
+    <div id="chatbot-window">
+        <div class="chat-header">
+            <span>Chatbot</span>
+            <button class="close-btn" onclick="closeChatbot()">&times;</button>
+        </div>
+        <div id="chat-box" class="chat-box">
+            <div class="message bot-message">Bună! Cu ce te pot ajuta astăzi?</div>
+        </div>
+        <div class="message-input">
+            <input type="text" id="user-input" placeholder="Scrie un mesaj...">
+            <button onclick="sendMessage()">Trimite</button>
+        </div>
+    </div>
+
+<!-- Scriptul de prelucrare a chatbot-ului -->
+    <script src="{% static 'js/chatbot.js' %}"></script>
+
+
+    <script src="{% static 'js/scripts.js' %}"></script>
+</body>
+</html>
+
+
