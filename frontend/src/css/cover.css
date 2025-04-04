@@ -1,0 +1,334 @@
+.page-content {
+  margin-left: 70px; /* Lățimea sidebar-ului */
+  padding-top: 70px; /* Evită suprapunerea cu navbar-ul */
+  width: calc(100% - 70px); /* Compensează lățimea sidebar-ului */
+  min-height: calc(100vh - 70px); /* Asigură o înălțime minimă pentru a lăsa loc footer-ului */
+}
+
+main {
+  background-color: gray;
+  padding: 20px; /* Adaugă padding pentru a crea spațiu interior */
+  margin-left: 70px; /* Lasă loc pentru sidebar */
+  margin-top: 5px; /* Evită suprapunerea cu navbar-ul */
+  flex-grow: 1; /* Permite conținutului să ocupe restul spațiului disponibil */
+  z-index: 1;
+}
+
+
+/* Footer  */
+footer .d-flex {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Întinde întreaga înălțime a paginii */
+}
+
+.flex-grow-1 {
+  flex-grow: 1; /* Permite conținutului să ocupe restul spațiului disponibil */
+}
+
+footer {
+  margin-top: auto; /* Împinge footer-ul în jos */
+}
+
+
+/* Chatbot.css */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.chat-box {
+  height: 300px;
+  overflow-y: auto;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-group input {
+  flex: 1;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+}
+
+.input-group button {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+
+/*Navbar styles*/
+.custom-navbar, .colordiv{
+  background-color: #123456 !important; /* Fundal personalizat */
+  padding: 15px 20px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 1200px;
+  width: calc(100% - 250px); /* Compensează sidebar-ul */
+  margin-left: 250px; /* Evită suprapunerea */
+  animation: animate 4s linear infinite;
+  box-shadow: 0 0 10px green,
+              0 0 10px deepskyblue;
+}
+@keyframes animate{
+0%{
+filter: hue-rotate(0deg);
+}
+100%{
+filter: hue-rotate(360deg);
+}
+}
+
+
+
+
+
+
+.custom-navbar .nav-link {
+  color: #ffffff !important;
+  font-weight: bold;
+  transition: color 0.3s ease-in-out;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #f8b400 !important; /* Schimbă culoarea la hover */
+}
+
+
+.navbar-logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.navbar-logo img {
+  height: 40px;
+  margin-right: 10px;
+}
+
+.search-bar {
+  flex-grow: 1; /* Ocupă tot spațiul disponibil */
+  max-width: 400px; /* Setează o lățime maximă */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 1px solid #ccc;
+}
+
+.logout-button {
+  margin-left: 10px;
+}
+
+
+/* Styles for sidebar  */
+.sidebar {
+  width: 70px; /* Lățimea sidebar-ului */
+  height: 100vh; /* Ocupă toată înălțimea ecranului */
+  position: fixed; /* Fix pe partea stângă */
+  top: 0;
+  left: 0;
+   font-size: 24px;
+  background-color: #343a40; /* Fundal închis */
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sidebar .nav-link {
+  color: #ffffff !important;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background: #495057; /* Culoare mai deschisă la hover */
+    border-radius: 10px;
+
+}
+
+.sidebar .logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.sidebar .logout-button {
+  margin-top: auto; /* Împinge butonul de logout în jos */
+  width: 100%;
+  background: red;
+  border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.content {
+  margin-left: 70px; /* Spațiu pentru sidebar */
+  padding: 20px;
+  width: calc(100% - 250px);
+  height: 100%;
+}
+
+
+/* Personalizare pagina welcome */
+/* Stiluri pentru containerul Welcome */
+.welcome-container {
+  color: white;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.custom-lead {
+  color: white; /* Setează culoarea textului alb */
+}
+
+
+/* Stiluri pentru main-ul Welcome */
+.main-welcome {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Stiluri pentru titlu */
+.custom-heading {
+  font-size: 3rem;
+  color: #123456; /* Personalizează culoarea */
+  font-weight: bold;
+}
+
+/* Stiluri pentru paragrafe */
+.custom-lead {
+  font-size: 1.25rem;
+  color: #333333; /* Culoare text */
+  margin-bottom: 20px;
+}
+
+/* Stiluri pentru butonul Login */
+.custom-btn {
+  background-color: #f8b400; /* Culoare personalizată */
+  border: none;
+  font-size: 1rem;
+  padding: 15px 30px;
+  border-radius: 25px;
+  transition: background-color 0.3s;
+}
+
+.custom-btn:hover {
+  background-color: #f8a500; /* Culoare la hover */
+}
+
+
+
+/* Stiluri pentru profil  */
+body{
+    margin-top:20px;
+    color: white;
+    text-align: left;
+    background-color: black;
+}
+.main-body {
+    padding: 15px;
+}
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: gray;
+    background-clip: border-box;
+    border: 0 solid rgba(0,0,0,.125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
+.gutters-sm {
+    margin-right: -8px;
+    margin-left: -8px;
+}
+
+.gutters-sm>.col, .gutters-sm>[class*=col-] {
+    padding-right: 8px;
+    padding-left: 8px;
+}
+.mb-3, .my-3 {
+    margin-bottom: 1rem!important;
+}
+
+.bg-gray-300 {
+    background-color: #e2e8f0;
+}
+.h-100 {
+    height: 100%!important;
+}
+.shadow-none {
+    box-shadow: none!important;
+}

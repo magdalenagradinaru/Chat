@@ -52,8 +52,13 @@ window.addEventListener('DOMContentLoaded', event => {
     });
 
     // Activate SimpleLightbox plugin for portfolio items
-    new SimpleLightbox({
-        elements: '#portfolio a.portfolio-box'
-    });
+    window.addEventListener('load', () => {
+    const elements = document.querySelectorAll('#portfolio a.portfolio-box');
+    if (elements.length > 0) {
+        new SimpleLightbox({ elements });
+    } else {
+        console.error("⚠️ Nu există elemente pentru SimpleLightbox!");
+    }
+});
 
 });
