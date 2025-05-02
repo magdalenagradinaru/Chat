@@ -1,4 +1,4 @@
-from .models import Conversation, Message, Profile
+from .models import Conversation, Message, UserProfile
 from rest_framework import serializers
 from django.contrib.auth.models import User
 
@@ -17,11 +17,6 @@ class ConversationSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'started_at', 'messages']
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = ["user", "bio", "phone", "mobile", "address", "profile_picture"]
-
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
@@ -32,6 +27,7 @@ class RegisterSerializer(serializers.Serializer):
     email = serializers.EmailField()
     password = serializers.CharField(write_only=True, min_length=6)
     confirm_password = serializers.CharField(write_only=True, min_length=6)
+    category = serializers.ChoiceField(choices=UserProfile.USER_CATEGORIES)
 
     def validate(self, data):
         # Validăm dacă parolele sunt identice
@@ -40,12 +36,17 @@ class RegisterSerializer(serializers.Serializer):
         return data
 
     def create(self, validated_data):
-        validated_data.pop('confirm_password')  # eliminăm confirm_password
+        validated_data.pop('confirm_password')
+        category = validated_data.pop('category')
 
-        # Creăm utilizatorul
-        user = User.objects.create_user(
-            username=validated_data['username'],
-            email=validated_data['email'],
-            password=validated_data['password']
-        )
+        user = User.objects.create_user(**validated_data)
+        UserProfile.objects.create(user=user, category=category)
         return user
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(source='user.email', read_only=True)
+    category = serializers.CharField(read_only=True)  # Elimină source='category'
+
+    class Meta:
+        model = UserProfile
+        fields = ['email', 'category']

@@ -1,12 +1,11 @@
 import React from "react";
-import { Navbar, Nav, Container, Form, Button } from "react-bootstrap";
-import { useLogout } from "../Pages/Logout";
+import { Navbar, Nav, Container, Form } from "react-bootstrap";
 import "../css/cover.css";
 import { FaHome, FaUser, FaEnvelope } from "react-icons/fa";
+import LogoutButton from '../components/LogoutButton';
 
 
 const Layout = ({ children }) => {
-  const handleLogout = useLogout();
 
   return (
     <div className="d-flex min-vh-100">
@@ -35,9 +34,10 @@ IT Community            </Navbar.Brand>
             </Form>
 
             {/* Buton Logout */}
-            <Button variant="danger" className="logout-button" onClick={handleLogout}>
-              Logout
-            </Button>
+         <div>
+      <h1>Bine ai venit!</h1>
+      <LogoutButton />
+    </div>
           </Container>
         </header>
 

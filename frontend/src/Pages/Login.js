@@ -1,64 +1,84 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import '../index.css';
+import BackButton from '../components/BackButton';
 import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState("");  // Folosim username în loc de email
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const login = async (username, password) => {
-    try {
-      const response = await axios.post("http://127.0.0.1:8000/api/login/", {
-        username,  // Se trimite username aici
-        password,
-      });
-
-      // Înregistrez informațiile despre utilizator în localStorage
-      localStorage.setItem("user", JSON.stringify(response.data.user));
-
-      // Navighez către pagina profilului utilizatorului
-      navigate("/intro");
-    } catch (error) {
-      if (error.response && error.response.data) {
-        setError(error.response.data.error || "Username sau parolă incorectă");
-      } else {
-        setError("A apărut o problemă. Te rugăm să încerci mai târziu.");
-      }
+  const handleLogin = async () => {
+  try {
+  const csrfToken = localStorage.getItem('csrfToken');
+const response = await axios.post('http://127.0.0.1:8000/api/login/', {
+    username,
+    password,
+}, {
+    headers: {
+        'X-CSRFToken': csrfToken
     }
-  };
+});
+
+    const { access, refresh, user } = response.data;
+
+    if (!access || !refresh) {
+      throw new Error("Token lipsă din răspuns.");
+    }
+
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
+    localStorage.setItem("user", JSON.stringify(user));
+
+    console.log("Token salvat în localStorage:", access);
+    navigate("/intro");
+
+  } catch (error) {
+    console.error("Eroare autentificare:", error);
+    if (error.response && error.response.data) {
+      setError(error.response.data.error || "Username sau parolă incorectă");
+    } else {
+      setError("A apărut o problemă. Te rugăm să încerci mai târziu.");
+    }
+  }
+};
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    login(username, password);
+    handleLogin();  // nu mai transmitem username/parola, ele sunt deja în state
   };
 
   return (
-    <div className="container-fluid bg-light vh-100 d-flex align-items-center justify-content-center">
-      <div className="container text-center w-50 p-4 shadow rounded">
-        <h2>Autentificare</h2>
-        {error && <p className="text-danger">{error}</p>}
-        <form onSubmit={handleSubmit}>
+    <div>
+      <BackButton to="/welcome" />
+      <div style={{ backgroundImage: `url('/path/catre/poza.png')` }}>
+        {error && (
+          <div className="error-msg">{error}</div>
+        )}
+        <form onSubmit={handleSubmit} className="register-form">
+          <h2 className="register-title">Login</h2>
           <input
-            type="text"
-            className="form-control my-2"
-            placeholder="Username"  // Folosim username în loc de email
             value={username}
             onChange={(e) => setUsername(e.target.value)}
+            placeholder="Username"
           />
           <input
-            type="password"
-            className="form-control my-2"
-            placeholder="Parolă"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            placeholder="Password"
           />
-          <button type="submit" className="btn btn-primary w-100">Autentificare</button>
+          <button type="submit">Login</button>
+          <div className="footer-text">
+            <span>Nu ai cont?</span>
+            <button type="button" onClick={() => navigate('/register')}>
+              Înregistrează-te
+            </button>
+          </div>
         </form>
-        <p className="mt-3">
-          Nu ai cont? <a href="/register">Înregistrează-te</a>
-        </p>
       </div>
     </div>
   );

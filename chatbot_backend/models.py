@@ -30,14 +30,16 @@ class Message(models.Model):
         return f"{self.sender} ({self.response_type if self.response_type else 'N/A'}): {self.text[:50]}"
 
 
-class Profile(models.Model):
-    objects = None
-    user = models.OneToOneField(User, on_delete=models.CASCADE)  # Legătură cu User
-    bio = models.TextField(null=False, default='No bio available')  # Set a default value here
-    phone = models.CharField(max_length=15, blank=True, null=True)
-    mobile = models.CharField(max_length=15, blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
-    profile_picture = models.ImageField(upload_to="profile_pics/", blank=True, null=True)
+
+class UserProfile(models.Model):
+    USER_CATEGORIES = (
+        ('consumator', 'Consumator'),
+        ('companie', 'Companie'),
+    )
+
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    category = models.CharField(max_length=20, choices=USER_CATEGORIES)
+    is_email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.user.username
+        return f"{self.user.username} - {self.category}"

@@ -7,7 +7,9 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [category, setCategory] = useState("");
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -23,10 +25,17 @@ const Register = () => {
         username,
         email,
         password,
+        confirm_password: confirmPassword,
+        category
       });
 
       if (response.status === 201) {
-        navigate("/login");
+        setSuccessMessage("Înregistrare reușită! Verifică email-ul pentru confirmare.");
+        setUsername("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+        setCategory("");
       }
     } catch (error) {
       if (error.response) {
@@ -40,68 +49,58 @@ const Register = () => {
   };
 
   return (
-    <div className="container-fluid" style={{ backgroundColor: 'rgba(240, 248, 255, 0.7)' }}>
-      <div className="container d-flex flex-column align-items-center justify-content-center vh-100">
-        <h2 className="mb-4">Înregistrare</h2>
-        {error && <p className="text-danger">{error}</p>}
+    <form onSubmit={handleSubmit} className="register-form">
+      <h2 className="register-title">Înregistrare</h2>
+      {error && <p className="text-danger">{error}</p>}
+      {successMessage && <p className="text-success">{successMessage}</p>}
 
-        <form className="w-50" onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control form-control-lg rounded-pill shadow-sm"
-              placeholder="Username"
-              required
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="email"
-              className="form-control form-control-lg rounded-pill shadow-sm"
-              placeholder="Email"
-              required
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              className="form-control form-control-lg rounded-pill shadow-sm"
-              placeholder="Parolă"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="mb-3">
-            <input
-              type="password"
-              className="form-control form-control-lg rounded-pill shadow-sm"
-              placeholder="Confirmă Parola"
-              required
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary w-100 btn-lg rounded-pill shadow-sm">
-            Înregistrează-te
-          </button>
-        </form>
+      <input
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        placeholder="Username"
+        required
+        className="register-input"
+      />
 
-        <div className="mt-3">
-          <button className="btn btn-secondary w-50 my-2" onClick={() => navigate("/login")}>
-            Ai deja un cont? Autentifică-te
-          </button>
+      <input
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        type="email"
+        required
+        className="register-input"
+      />
 
-          <button className="btn btn-link" onClick={() => navigate("/")}>
-            Mergi la Welcome
-          </button>
-        </div>
+      <input
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+        placeholder="Parolă"
+        required
+        className="register-input"
+      />
+
+      <input
+        placeholder="Confirmă Parola"
+        type="password"
+        required
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        className="register-input"
+      />
+
+      <select value={category} onChange={(e) => setCategory(e.target.value)} required className="register-input">
+        <option value="">Selectează categoria</option>
+        <option value="consumator">Consumator</option>
+        <option value="companie">Companie</option>
+      </select>
+
+      <div className="mt-3">
+        <button className="btn btn-secondary w-50 my-2" onClick={() => navigate("/login")}>Ai deja un cont? Autentifică-te</button>
+        <button type="submit" className="register-button">Înregistrează-te</button>
+        <button className="btn btn-link" onClick={() => navigate("/")}>Mergi la Welcome</button>
       </div>
-    </div>
+    </form>
   );
 };
 

@@ -79,9 +79,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'  # Sau alt server SMTP
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'your_email@example.com'  # Email-ul tău
-EMAIL_HOST_PASSWORD = 'your_email_password'  # Parola email-ului
-
+EMAIL_HOST_USER = 'gradinaru.madalina8@gmail.com'  # Email-ul tău
+EMAIL_HOST_PASSWORD = 'gbqk aqyh upsd awzh'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 
 ROOT_URLCONF = 'ChatbotProject.urls'
@@ -104,7 +104,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ChatbotProject.wsgi.application'
 
-LOGIN_REDIRECT_URL = "/welcome/"
+LOGIN_REDIRECT_URL = 'http://localhost:3000/login'  # sau URL-ul de producție
 LOGOUT_REDIRECT_URL = '/'
 
 # Database
@@ -179,3 +179,14 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ],
 }
+
+import smtplib
+
+try:
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login('gradinaru.madalina8@gmail.com', 'gbqk aqyh upsd awzh')
+    print("SMTP autentificat cu succes.")
+    server.quit()
+except Exception as e:
+    print("Eroare SMTP:", e)
