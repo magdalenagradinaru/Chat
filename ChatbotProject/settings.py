@@ -83,6 +83,10 @@ EMAIL_HOST_USER = 'gradinaru.madalina8@gmail.com'  # Email-ul tău
 EMAIL_HOST_PASSWORD = 'gbqk aqyh upsd awzh'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'
+
+
 
 ROOT_URLCONF = 'ChatbotProject.urls'
 

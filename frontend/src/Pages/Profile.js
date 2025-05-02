@@ -3,35 +3,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/cover.css"; // Asigură-te că acest fișier CSS există
 import Layout from "../components/Layout"; // Asigură-te că ai un Layout disponibil
 import axios from 'axios';
+import ProfileForm from '../components/ProfileForm'; // ajustează calea dacă fișierul se află în alt director
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
+  const [showForm, setShowForm] = useState(false);
 
+  // Funcție pentru a obține profilul utilizatorului
   useEffect(() => {
-    // Obține profilul utilizatorului din API
-const fetchUserProfile = async () => {
-  try {
-    const token = localStorage.getItem('access');
-    console.log("Token trimis:", token);
+    const fetchUserProfile = async () => {
+      try {
+        const token = localStorage.getItem('access');
+        console.log("Token trimis:", token);
 
-    const response = await axios.get('http://127.0.0.1:8000/profile/', {
-      headers: {
-        Authorization: `Bearer ${token}`,
+        const response = await axios.get('http://127.0.0.1:8000/profile/', {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
+        console.log("Profilul utilizatorului:", response.data);
+        setUserProfile(response.data);
+      } catch (error) {
+        console.error("Nu s-au putut prelua datele de profil:", error);
+        if (error.response) {
+          console.error("Detalii eroare:", error.response.data);
+          const errorMessage = error.response?.data?.detail || error.response?.data?.error || "A apărut o eroare necunoscută.";
+          alert("Eroare: " + errorMessage);
+        }
       }
-    });
-
-    console.log("Profilul utilizatorului:", response.data);
-    setUserProfile(response.data);
-  } catch (error) {
-    console.error("Nu s-au putut prelua datele de profil:", error);
-    if (error.response) {
-      console.error("Detalii eroare:", error.response.data);
-const errorMessage = error.response?.data?.detail || error.response?.data?.error || "A apărut o eroare necunoscută.";
-alert("Eroare: " + errorMessage);
-    }
-  }
-};
-
+    };
 
     fetchUserProfile();
   }, []);
@@ -72,8 +73,16 @@ alert("Eroare: " + errorMessage);
                   <ProfileDetail label="Email" value={userProfile.email} />
                   <div className="row">
                     <div className="col-sm-12">
-                      <button className="btn btn-info">Edit</button>
+                      <button className="btn btn-info" onClick={() => setShowForm(!showForm)}>
+                        {showForm ? "Close Editor" : "Edit"}
+                      </button>
                     </div>
+                    {showForm && (
+                      <div className="mt-4">
+                        <h5>Edit Profile</h5>
+                        <ProfileForm setUserProfile={setUserProfile} />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>

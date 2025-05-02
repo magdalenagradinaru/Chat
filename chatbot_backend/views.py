@@ -24,6 +24,7 @@ from django.shortcuts import redirect
 
 from .models import UserProfile
 from .serializers import UserProfileSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 # Chatbot view
 class ChatViewSet(ViewSet):
@@ -149,16 +150,33 @@ def check_authentication(request):
 def get_csrf_token(request):
     return JsonResponse({"csrfToken": get_token(request)})
 
-class ProfileView(APIView):
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .models import UserProfile
+from .serializers import UserProfileSerializer
+from rest_framework import status
+
+class UserProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         try:
-            # Verifică dacă utilizatorul are profilul asociat
-            profile = request.user.profile
+            profile = UserProfile.objects.get(user=request.user)
             serializer = UserProfileSerializer(profile)
             return Response(serializer.data)
         except UserProfile.DoesNotExist:
-            return Response({"error": "Profilul nu există."}, status=404)
-        except Exception as e:
-            return Response({"error": str(e)}, status=500)
+            return Response({'error': 'Profilul nu există.'}, status=404)
+
+    def put(self, request):
+        try:
+            profile = UserProfile.objects.get(user=request.user)
+        except UserProfile.DoesNotExist:
+            return Response({'error': 'Profilul nu există.'}, status=404)
+
+        serializer = UserProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
