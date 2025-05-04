@@ -56,3 +56,15 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'user', 'email', 'phone_number', 'address', 'profile_picture',
                   'education', 'work_experience', 'biography', 'category']
         read_only_fields = ['user', 'email']
+
+
+from rest_framework import serializers
+from .models import Post
+
+class PostSerializer(serializers.ModelSerializer):
+    author = serializers.CharField(source='author.username', read_only=True)
+
+    class Meta:
+        model = Post
+        fields = ['id', 'author', 'content', 'created_at']
+        read_only_fields = ['author', 'created_at']

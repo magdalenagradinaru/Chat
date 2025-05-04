@@ -1,6 +1,5 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from .views import ChatViewSet, get_csrf_token, RegisterView, LogoutView, LoginView, UserProfileAPIView
+from .views import ChatViewSet, get_csrf_token, RegisterView, LogoutView, LoginView, UserProfileAPIView, PostAPIView
 from .views import ActivateAccountView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.routers import DefaultRouter
@@ -18,6 +17,8 @@ urlpatterns = [
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/logout/', LogoutView.as_view(), name='logout'),
     path('api/profile/', UserProfileAPIView.as_view(), name='user-profile'),
+
+    path('api/posts/', PostAPIView.as_view(), name='post-list'),
 
     path('api/activate/<uidb64>/<token>/', ActivateAccountView.as_view(), name='activate-account'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
