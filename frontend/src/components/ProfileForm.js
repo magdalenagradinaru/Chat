@@ -25,36 +25,40 @@ const ProfileForm = ({ setUserProfile }) => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const token = localStorage.getItem('access');
-    const formData = new FormData();
+  e.preventDefault();
+  const token = localStorage.getItem('access');
+  const formData = new FormData();
 
-    for (const key in profile) {
-      if (profile[key] !== null) {
-        formData.append(key, profile[key]);
+  for (const key in profile) {
+    if (profile[key] !== null && profile[key] !== undefined) {
+      formData.append(key, profile[key]);
+    }
+  }
+
+  console.log("Form data trimis:", formData); // Verifică conținutul formData
+
+  try {
+    const response = await axios.put('http://127.0.0.1:8000/api/profile/', formData, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data'
       }
-    }
+    });
 
-    try {
-      const response = await axios.put('/api/user/profile/', formData, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'multipart/form-data'
-        }
-      });
-      setUserProfile(response.data);
-      setMessage('Profil actualizat cu succes!');
-    } catch (error) {
-      console.error('Eroare la actualizarea profilului:', error);
-      setMessage('A apărut o eroare la salvare.');
-    }
-  };
+    setUserProfile(response.data);
+    setMessage('Profil actualizat cu succes!');
+  } catch (error) {
+    console.error('Eroare la actualizarea profilului:', error);
+    setMessage('A apărut o eroare la salvare.');
+  }
+};
+
 
   useEffect(() => {
     const fetchProfile = async () => {
       const token = localStorage.getItem('access');
       try {
-        const response = await axios.get('/api/user/profile/', {
+        const response = await axios.get('http://127.0.0.1:8000/api/profile/', {
           headers: {
             'Authorization': `Bearer ${token}`
           }

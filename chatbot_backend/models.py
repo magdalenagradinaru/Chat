@@ -44,22 +44,13 @@ class UserProfile(models.Model):
     # Câmpuri noi
     phone_number = models.CharField(max_length=20, null=True, blank=True)
     address = models.CharField(max_length=255, null=True, blank=True)
-    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)  # Foto de profil
-    education = models.TextField(null=True, blank=True)  # Studii
-    work_experience = models.TextField(null=True, blank=True)  # Experiență de muncă
-    biography = models.TextField(null=True, blank=True)  # Biografie
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
+    education = models.TextField(null=True, blank=True)
+    work_experience = models.TextField(null=True, blank=True)
+    biography = models.TextField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.user.username}'s profile"
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        UserProfile.objects.create(user=instance)
 
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.userprofile.save()

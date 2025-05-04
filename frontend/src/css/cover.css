@@ -1,19 +1,61 @@
 .page-content {
   margin-left: 70px; /* Lățimea sidebar-ului */
-  padding-top: 70px; /* Evită suprapunerea cu navbar-ul */
+  padding-top: 0px; /* Evită suprapunerea cu navbar-ul */
   width: calc(100% - 70px); /* Compensează lățimea sidebar-ului */
-  min-height: calc(100vh - 70px); /* Asigură o înălțime minimă pentru a lăsa loc footer-ului */
+  min-height: calc(100vh - 10px); /* Asigură o înălțime minimă pentru a lăsa loc footer-ului */
 }
 
 main {
   background-color: gray;
-  padding: 20px; /* Adaugă padding pentru a crea spațiu interior */
   margin-left: 70px; /* Lasă loc pentru sidebar */
-  margin-top: 5px; /* Evită suprapunerea cu navbar-ul */
+  margin-top: 30px; /* Evită suprapunerea cu navbar-ul */
   flex-grow: 1; /* Permite conținutului să ocupe restul spațiului disponibil */
   z-index: 1;
 }
 
+
+
+/* Postari*/
+
+
+/* cover.css sau alt fișier CSS */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.card img {
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  height: 200px;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-text small {
+  color: #777;
+}
+
+button {
+  padding: 10px 15px;
+  background-color: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
 
 /* Footer  */
 footer .d-flex {
@@ -64,15 +106,6 @@ footer {
   cursor: pointer;
 }
 
-.chat-box {
-  height: 300px;
-  overflow-y: auto;
-  padding: 1rem;
-  margin-bottom: 1rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  background-color: #fff;
-}
 
 .input-group {
   display: flex;
@@ -331,4 +364,25 @@ body{
 }
 .shadow-none {
     box-shadow: none!important;
+}
+
+
+/* În cover.css sau fișierul CSS relevant */
+
+.chat-box {
+  height: 400px;
+  overflow-y: auto;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 10px;
+  word-wrap: break-word; /* Asigură că textul lung se rupe la linia următoare */
+}
+
+.chat-box .badge {
+  display: inline-block; /* Asigură că elementul este tratat ca un bloc în linie */
+  max-width: 100%; /* Limitează lățimea la 100% */
+  word-wrap: break-word; /* Asigură împărțirea cuvintelor lungi */
+  white-space: pre-wrap; /* Permite ruperea cuvintelor pe mai multe linii */
+  padding: 10px;
+  margin: 5px;
 }

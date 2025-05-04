@@ -1,48 +1,58 @@
-import React from "react";
+import React, { useState } from "react";
 import { Navbar, Nav, Container, Form } from "react-bootstrap";
 import "../css/cover.css";
-import { FaHome, FaUser, FaEnvelope } from "react-icons/fa";
-import LogoutButton from '../components/LogoutButton';
-
+import { FaHome, FaUser, FaEnvelope, FaComments } from "react-icons/fa";
+import LogoutButton from "../components/LogoutButton";
+import Chatbot from "../components/Chatbot";
 
 const Layout = ({ children }) => {
+  const [isChatbotOpen, setChatbotOpen] = useState(false);
+
+  const toggleChatbot = () => setChatbotOpen(prev => !prev);
 
   return (
     <div className="d-flex min-vh-100">
       {/* Sidebar-ul vertical */}
-   <div className="sidebar">
-  <Nav className="flex-column">
-    <Nav.Link href="/intro" className="nav-link"><FaHome /></Nav.Link>
-    <Nav.Link href="/profile" className="nav-link"><FaUser /></Nav.Link>
-    <Nav.Link href="/contact" className="nav-link"><FaEnvelope /></Nav.Link>
-  </Nav>
-</div>
+      <div className="sidebar">
+        <Nav className="flex-column">
+          <Nav.Link href="/intro" className="nav-link"><FaHome /></Nav.Link>
+          <Nav.Link href="/profile" className="nav-link"><FaUser /></Nav.Link>
+          <Nav.Link href="/contact" className="nav-link"><FaEnvelope /></Nav.Link>
+          <Nav.Link href="/chatbot" className="nav-link"><FaComments /></Nav.Link>
+
+        </Nav>
+      </div>
 
       {/* Conținutul paginii */}
       <div className="flex-grow-1 d-flex flex-column">
-        {/* Header-ul (fostul Navbar) */}
         <header className="custom-navbar bg-dark text-white px-3 py-2">
           <Container fluid className="d-flex align-items-center">
-            {/* Logo + Nume aplicație */}
             <Navbar.Brand href="#" className="navbar-logo text-white">
               <img src="/mylogo.png" alt="Logo" style={{ height: "40px", marginRight: "10px" }} />
-IT Community            </Navbar.Brand>
+              IT Community
+            </Navbar.Brand>
 
-            {/* Search Field */}
             <Form className="search-bar mx-auto">
               <Form.Control type="text" placeholder="Caută..." />
             </Form>
 
-            {/* Buton Logout */}
-         <div>
-      <h1>Bine ai venit!</h1>
-      <LogoutButton />
-    </div>
+            <div>
+              <LogoutButton />
+            </div>
           </Container>
         </header>
 
         {/* Main Content */}
-  <main role="main" className="inner cover flex-grow-1 p-4">{children}</main>
+        <main role="main" className="inner cover flex-grow-1 p-1">
+          {children}
+
+          {/* Afișăm Chatbot-ul dacă e deschis */}
+          {isChatbotOpen && (
+            <div className="chatbot-container">
+              <Chatbot closeChatbot={toggleChatbot} />
+            </div>
+          )}
+        </main>
 
         {/* Footer */}
         <footer className="mastfoot bg-dark text-white text-center p-3">

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'user_interface',
     'frontend',
     'chatbot_backend',
+    'companies',
     'rest_framework',
 ]
 
@@ -73,6 +74,16 @@ CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_SECURE = False
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = "Lax"
+
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),  # default: 5 minute
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),     # default: 1 zi
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_ROTATION': True,
+}
+
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

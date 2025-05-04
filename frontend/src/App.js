@@ -5,7 +5,7 @@ import Login from "./Pages/Login";
 import Register from "./Pages/Register";
 import Welcome from "./Pages/Welcome";
 import Profile from "./Pages/Profile";
-import Chatbot from "./components/Chatbot";
+import Chatbot from "./Pages/Chatbot";
 import "./css/global.css";
 import "./css/cover.css";
 import ProtectedRoute from './components/ProtectedRoute';
