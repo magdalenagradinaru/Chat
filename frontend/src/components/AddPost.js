@@ -23,7 +23,7 @@ const AddPost = ({ onPostAdded }) => {
     formData.append('title', title);
     formData.append('content', content);
     formData.append('company', company);
-    formData.append('image', image); // Adaugă imaginea (dacă există)
+    formData.append('image', image);
 
     try {
       // Trimite cererea POST cu tokenul de autentificare în header
@@ -46,7 +46,7 @@ const AddPost = ({ onPostAdded }) => {
       setContent("");
       setCompany("company");
       setImage(null);
-      setErrorMessage(""); // Reset error message
+      setErrorMessage("");
     } catch (error) {
       setErrorMessage("Eroare la adăugarea postării. Verifică datele și încearcă din nou.");
       console.error("Eroare la adăugarea postării:", error);

@@ -8,8 +8,7 @@ export const useLogout = () => {
       // Îndepărtăm token-ul din localStorage
       localStorage.removeItem("user");
 
-      // Navigăm la pagina de welcome
-      navigate("/welcome"); 
+      navigate("/welcome");
     } catch (error) {
       console.error("Eroare la delogare:", error);
     }

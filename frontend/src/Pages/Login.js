@@ -48,7 +48,7 @@ const response = await axios.post('http://127.0.0.1:8000/api/login/', {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    handleLogin();  // nu mai transmitem username/parola, ele sunt deja în state
+    handleLogin();
   };
 
   return (

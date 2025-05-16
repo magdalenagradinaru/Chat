@@ -1,46 +1,37 @@
 import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "../css/cover.css"; // Asigură-te că acest fișier CSS există
-import Layout from "../components/Layout"; // Asigură-te că ai un Layout disponibil
+import "../css/cover.css";
+import Layout from "../components/Layout";
 import axios from 'axios';
-import ProfileForm from '../components/ProfileForm'; // ajustează calea dacă fișierul se află în alt director
+import ProfileForm from '../components/ProfileForm';
 
 const Profile = () => {
   const [userProfile, setUserProfile] = useState(null);
   const [showForm, setShowForm] = useState(false);
 
-  // Funcție pentru a obține profilul utilizatorului
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const token = localStorage.getItem('access');
-        console.log("Token trimis:", token);
-
         const response = await axios.get('http://127.0.0.1:8000/api/profile/', {
           headers: {
             Authorization: `Bearer ${token}`,
           }
         });
-
-        console.log("Profilul utilizatorului:", response.data);
         setUserProfile(response.data);
       } catch (error) {
         console.error("Nu s-au putut prelua datele de profil:", error);
-        if (error.response) {
-          console.error("Detalii eroare:", error.response.data);
-          const errorMessage = error.response?.data?.detail || error.response?.data?.error || "A apărut o eroare necunoscută.";
-          alert("Eroare: " + errorMessage);
-        }
       }
     };
 
     fetchUserProfile();
   }, []);
 
-  // Verifică dacă profilele au fost încărcate
   if (!userProfile) {
     return <div>Loading...</div>;
   }
+
+
 
   return (
     <Layout>
@@ -50,18 +41,16 @@ const Profile = () => {
             <div className="col-md-4 mb-3">
               <div className="card">
                 <div className="card-body text-center">
-                  <img
-                    src="https://bootdey.com/img/Content/avatar/avatar7.png"
-                    alt="User"
+                <img
+  src={userProfile.profile_picture ? `http://127.0.0.1:8000${userProfile.profile_picture}` : "https://bootdey.com/img/Content/avatar/avatar7.png"}
+                    alt="UserImg"
                     className="rounded-circle"
                     width="150"
                   />
                   <div className="mt-3">
-                    <h4>{userProfile.full_name || "User Name"}</h4>
-                    <p className="text-secondary mb-1">Category: {userProfile.category}</p>
-                    <p className="text-muted font-size-sm">{userProfile.email || "No email"}</p>
-                    <button className="btn btn-primary">Follow</button>
-                    <button className="btn btn-outline-primary">Message</button>
+                    <h4>{userProfile.username || "User Name"}</h4> {/* Afișează username-ul */}
+                    <button className="btn btn-primary">Urmăriri</button>
+                    <button className="btn btn-outline-primary">Mesaje</button>
                   </div>
                 </div>
               </div>
@@ -69,17 +58,26 @@ const Profile = () => {
             <div className="col-md-8">
               <div className="card mb-3">
                 <div className="card-body">
-                  <ProfileDetail label="Category" value={userProfile.category} />
+                  {/* Afișează detalii adiționale înainte de butonul de editare */}
+                 <ProfileDetail label="Nume complet" value={userProfile.full_name} />
+                  <ProfileDetail label="Categorie" value={userProfile.category} />
                   <ProfileDetail label="Email" value={userProfile.email} />
+                  <ProfileDetail label="Număr de telefon" value={userProfile.phone_number} />
+                  <ProfileDetail label="Adresă" value={userProfile.address} />
+                   <ProfileDetail label="Educație" value={userProfile.education} />
+                  <ProfileDetail label="Experiență de muncă" value={userProfile.work_experience} />
+                  <ProfileDetail label="Biografie" value={userProfile.biography} />
+
+                  {/* Afișează formularul pentru editare */}
                   <div className="row">
                     <div className="col-sm-12">
                       <button className="btn btn-info" onClick={() => setShowForm(!showForm)}>
-                        {showForm ? "Close Editor" : "Edit"}
+                        {showForm ? "Închide editorul" : "Editează"}
                       </button>
                     </div>
                     {showForm && (
                       <div className="mt-4">
-                        <h5>Edit Profile</h5>
+                        <h5>Editare Profil</h5>
                         <ProfileForm setUserProfile={setUserProfile} />
                       </div>
                     )}

@@ -57,7 +57,7 @@ const Chatbot = () => {
       <Layout>
     <div className="container my-5">
 
-      {/* Butonul de întoarcere — poziționat fix sus stânga
+      {/* Butonul de întoarcere
       <button
         className="btn btn-secondary mb-3 w-10"
         style={{ position: "fixed", top: "20px", left: "20px", zIndex: 1000 }}
@@ -126,7 +126,7 @@ const Chatbot = () => {
             ))}
           </div>
 
-          {/* Input + butoanele pe același rând */}
+          {/* Input + butoanele */}
             <input
               type="text"
               className="form-control rounded-pill mb-2"

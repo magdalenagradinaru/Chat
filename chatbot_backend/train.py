@@ -1,4 +1,4 @@
-#train.py:
+#train.py: se rulează acest modeul după fiecare modificare in fisierul cu intentii,json
 
 import numpy as np
 import torch
@@ -9,7 +9,7 @@ from chatbot_backend.model import NeuralNet
 import json
 
 # Citim intentiile din fisierul JSON
-with open('intents.json', 'r') as f:
+with open('data/intents.json', 'r') as f:
     intents = json.load(f)
 
 # Lista cu cuvinte si etichete
@@ -34,8 +34,8 @@ all_words = sorted(set(all_words))
 tags = sorted(set(tags))
 
 # Creăm seturile de date pentru antrenament
-X_train = [bag_of_words(sentence, all_words) for sentence, _ in xy]
-y_train = [tags.index(tag) for _, tag in xy]
+X_train = [bag_of_words(sentence, all_words) for sentence, _ in xy] # matricea de intrare
+y_train = [tags.index(tag) for _, tag in xy]                        # vectorul de ieșire
 
 # Conversie în numpy arrays
 X_train = np.array(X_train)
@@ -52,13 +52,15 @@ num_epochs = 1000
 # Dataset personalizat pentru DataLoader
 class ChatDataset(Dataset):
     def __init__(self):
-        self.n_samples = len(X_train)
-        self.x_data = X_train
-        self.y_data = y_train
+        self.n_samples = len(X_train)   # nr de propozitii in setul de date
+        self.x_data = X_train           # datele de intrare
+        self.y_data = y_train           # intentiile care se refera la o propozitie respectiva
 
+# preia intrarea si eticheta
     def __getitem__(self, index):
         return self.x_data[index], self.y_data[index]
 
+# nr totaș de exemple din dataset
     def __len__(self):
         return self.n_samples
 
@@ -69,8 +71,9 @@ train_loader = DataLoader(dataset=dataset, batch_size=batch_size, shuffle=True)
 # Instanțiem și antrenăm modelul
 model = NeuralNet(input_size, hidden_size, output_size)
 criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)  # actualizarea parametrilor modelului in timpul antrenamentului
 
+# epoch - ciclu complet de antrenament
 for epoch in range(num_epochs):
     for words, labels in train_loader:
         words = torch.tensor(words, dtype=torch.float32)

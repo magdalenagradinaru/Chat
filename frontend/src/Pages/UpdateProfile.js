@@ -7,7 +7,6 @@ const UpdateProfile = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Aici poți încărca profilul utilizatorului dacă este necesar
   }, []);
 
   const handleUpdateProfile = async (e) => {

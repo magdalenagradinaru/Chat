@@ -1,4 +1,6 @@
 from django.core.management.base import BaseCommand
+
+from companies.management.commands.scrape_companies import scrape_companies
 from companies.models import CompanyJob
 
 class Command(BaseCommand):
@@ -12,7 +14,7 @@ class Command(BaseCommand):
 
         for url in job_urls:
             self.stdout.write(f"Scraping {url}")
-            data = scrape_job_detail(url)
+            data = scrape_companies(url)
 
             if data:
                 obj, created = CompanyJob.objects.get_or_create(

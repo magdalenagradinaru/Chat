@@ -1,12 +1,12 @@
-import { useNavigate } from 'react-router-dom';  // Importați useNavigate din React Router
-import { FaArrowLeft } from 'react-icons/fa';    // Importați iconul dorit (ex: FaArrowLeft)
+import { useNavigate } from 'react-router-dom';
+import { FaArrowLeft } from 'react-icons/fa';
 
 const BackButton = ({ to }) => {
-  const navigate = useNavigate();  // Creează funcția de navigare
+  const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => navigate(to)}  // Navighează la ruta personalizată
+      onClick={() => navigate(to)}
       style={{
         display: 'flex',
         alignItems: 'center',

@@ -6,6 +6,8 @@ import Register from "./Pages/Register";
 import Welcome from "./Pages/Welcome";
 import Profile from "./Pages/Profile";
 import Chatbot from "./Pages/Chatbot";
+import Inbox from "./Pages/Inbox";
+import AboutPage from "./Pages/AboutPage";
 import "./css/global.css";
 import "./css/cover.css";
 import ProtectedRoute from './components/ProtectedRoute';
@@ -49,6 +51,22 @@ function App() {
           element={
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          }
+        />
+         <Route
+          path="/inbox"
+          element={
+            <ProtectedRoute>
+              <Inbox />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/about"
+          element={
+            <ProtectedRoute>
+              <AboutPage />
             </ProtectedRoute>
           }
         />

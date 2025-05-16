@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Input, Label } from 'reactstrap';
 
 
-// Componentă cu trei proprietăți
 const ChatModal = ({ isOpen, toggle, onSendMessage }) => {
-  const [userMessage, setUserMessage] = useState("");           // În input stochează mesajul userului
+  const [userMessage, setUserMessage] = useState("");
 
 // Când user introduce mesaj, schimbă starea
   const handleChange = (e) => {

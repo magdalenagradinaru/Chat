@@ -1,4 +1,4 @@
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
@@ -11,18 +11,22 @@ from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from django.middleware.csrf import get_token
 from django.http import JsonResponse
-
+from rest_framework_simplejwt.tokens import RefreshToken
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.template.loader import render_to_string
 from django.conf import settings
-
+from .models import UserProfile
+from .serializers import UserProfileSerializer
 from django.utils.http import urlsafe_base64_decode
 from django.shortcuts import redirect
+from .models import Post
+from .serializers import PostSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
-# Chatbot view
+# Chatbot view....................................................................
 class ChatViewSet(ViewSet):
     def create(self, request):
         user_message = request.data.get('message')
@@ -38,9 +42,7 @@ class ChatViewSet(ViewSet):
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-from rest_framework_simplejwt.tokens import RefreshToken
-
-
+# Login view....................................................................................
 class LoginView(APIView):
     permission_classes = [AllowAny]
 
@@ -72,6 +74,19 @@ class LoginView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+# Logout view...........................................................................
+class LogoutView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        # Delogăm utilizatorul
+        logout(request)
+        return Response({'message': 'Delogare reușită!'}, status=200)
+
+
+
+# Register view.......................................................................
 class RegisterView(APIView):
     permission_classes = [AllowAny]
 
@@ -104,6 +119,8 @@ class RegisterView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+
+# Activarea contului prin email................................................................
 class ActivateAccountView(APIView):
     permission_classes = [AllowAny]
 
@@ -123,37 +140,26 @@ class ActivateAccountView(APIView):
             # Redirecționează către frontend (react app)
             return redirect(settings.LOGIN_REDIRECT_URL)
 
-        # În caz de eroare, returnează un răspuns JSON
         return Response({'error': 'Link invalid sau expirat!'}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
 
-    def post(self, request):
-        # Delogăm utilizatorul
-        logout(request)
-        return Response({'message': 'Delogare reușită!'}, status=200)
-
-# Endpoint pentru verificarea autentificării utilizatorului
+# Endpoint pentru verificarea autentificării utilizatorului................................................
 def check_authentication(request):
     if request.user.is_authenticated:
         return JsonResponse({'authenticated': True, 'username': request.user.username})
     return JsonResponse({'authenticated': False})
 
 
-# Endpoint pentru token-ul CSRF
+# Endpoint pentru token-ul CSRF...........................................................................
 def get_csrf_token(request):
     return JsonResponse({"csrfToken": get_token(request)})
 
 
-
-
-from .models import UserProfile
-from .serializers import UserProfileSerializer
-
+# view pentru profilul utilizatorului.....................................................................
 class UserProfileAPIView(APIView):
     permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser]
 
     def get(self, request):
         try:
@@ -164,25 +170,14 @@ class UserProfileAPIView(APIView):
             return Response({'error': 'Profilul nu există.'}, status=404)
 
     def put(self, request):
-        try:
-            profile = UserProfile.objects.get(user=request.user)
-        except UserProfile.DoesNotExist:
-            return Response({'error': 'Profilul nu există.'}, status=404)
-
+        profile = request.user.userprofile
         serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
 
-
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
-from rest_framework import status
-from .models import Post
-from .serializers import PostSerializer
-
+# Post view.................................................................................
 class PostAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -199,3 +194,75 @@ class PostAPIView(APIView):
         post = Post.objects.create(author=request.user, content=content)
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+from .models import PostMessage
+from .serializers import PostMessageSerializer
+
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def send_message(request):
+    post_id = request.data.get('post_id')
+    content = request.data.get('message')  # mesajul trimis din frontend
+
+
+
+    if not post_id or not content:
+        return Response({"detail": "Post ID and message are required."}, status=400)
+
+
+    try:
+        post = Post.objects.get(id=post_id)
+        recipient = post.author
+
+        print(f"User: {request.user.username}")
+        print(f"Post Author: {recipient.username}")
+
+        if request.user == recipient:
+            return Response({"detail": "Nu poți trimite mesaje pentru propria postare."}, status=400)
+
+        message = PostMessage.objects.create(
+            sender=request.user,
+            recipient=recipient,
+            post=post,
+            content=content
+        )
+
+        serializer = PostMessageSerializer(message)
+        return Response(serializer.data, status=201)
+
+    except Post.DoesNotExist:
+        return Response({"detail": "Post not found."}, status=404)
+    except Exception as e:
+        return Response({"detail": f"Error sending message: {str(e)}"}, status=500)
+
+
+
+class InboxMessagesView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        messages = PostMessage.objects.filter(recipient=user).order_by('-created_at')
+        serializer = PostMessageSerializer(messages, many=True)
+        return Response(serializer.data)
+
+    def patch(self, request, pk=None):
+        user = request.user
+        message_id = pk or request.data.get('id')
+        if not message_id:
+            return Response({'error': 'ID mesaj lipsă'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            message = PostMessage.objects.get(id=message_id, recipient=user)
+        except PostMessage.DoesNotExist:
+            return Response({'error': 'Mesajul nu există sau nu îți aparține'}, status=status.HTTP_404_NOT_FOUND)
+
+        if not message.is_read:
+            message.is_read = True
+            message.save()
+
+        return Response({'status': 'Mesaj marcat ca citit'}, status=status.HTTP_200_OK)

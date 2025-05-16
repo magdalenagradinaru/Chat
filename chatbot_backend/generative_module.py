@@ -1,9 +1,4 @@
-#generative_module.py:
-
 import openai
-import torch
-from dotenv import load_dotenv
-
 
 # Setează cheia API OpenAI
 openai.api_key = "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"

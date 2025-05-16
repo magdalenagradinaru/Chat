@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Navbar, Nav, Container, Form } from "react-bootstrap";
 import "../css/cover.css";
-import { FaHome, FaUser, FaEnvelope, FaComments } from "react-icons/fa";
+import { FaHome, FaUser, FaEnvelope, FaComments, FaInbox } from "react-icons/fa"; // Importăm iconița pentru Inbox
 import LogoutButton from "../components/LogoutButton";
 import Chatbot from "../components/Chatbot";
 
@@ -17,9 +17,9 @@ const Layout = ({ children }) => {
         <Nav className="flex-column">
           <Nav.Link href="/intro" className="nav-link"><FaHome /></Nav.Link>
           <Nav.Link href="/profile" className="nav-link"><FaUser /></Nav.Link>
-          <Nav.Link href="/contact" className="nav-link"><FaEnvelope /></Nav.Link>
+          <Nav.Link href="/about" className="nav-link"><FaEnvelope /></Nav.Link>
           <Nav.Link href="/chatbot" className="nav-link"><FaComments /></Nav.Link>
-
+          <Nav.Link href="/inbox" className="nav-link"><FaInbox /> </Nav.Link> {/* Adăugat linkul pentru Inbox */}
         </Nav>
       </div>
 
@@ -46,7 +46,7 @@ const Layout = ({ children }) => {
         <main role="main" className="inner cover flex-grow-1 p-1">
           {children}
 
-          {/* Afișăm Chatbot-ul dacă e deschis */}
+          {/* Afișăm Chatbot-ul in cazul popup */}
           {isChatbotOpen && (
             <div className="chatbot-container">
               <Chatbot closeChatbot={toggleChatbot} />

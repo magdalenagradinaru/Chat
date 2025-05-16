@@ -8,4 +8,4 @@ def chatbot_fallback_response(user_input):
         if company.name.lower() in user_input_lower:
             return f"{company.name}:  {company.source}. Website: {company.website or 'Nedisponibil'}"
 
-    return "Nu am informații despre această companie momentan."
+    return None

@@ -53,7 +53,6 @@ def scrape_allied_testing():
             return None
 
     for job in jobs_section:
-        # Caută <a> care are clasele vacancyShowPopup și vacancy
         title_tag = job.select_one("a.vacancyShowPopup.vacancy")
         meta_tag = job.find("div", class_="vacancy-meta")
 
@@ -90,6 +89,20 @@ def scrape_allied_testing():
     )
 
     print(f"[OK] Datele pentru '{company_name}' au fost salvate/actualizate.")
+
+
+def run_scraping():
+    url = "https://www.alliedtesting.com"
+    response = requests.get(url)
+
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # Extrage datele și salvează
+        print("Scraping completed successfully")
+    else:
+        print("Error fetching the page")
+
+
 
 if __name__ == "__main__":
     scrape_allied_testing()

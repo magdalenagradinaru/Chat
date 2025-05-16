@@ -1,15 +1,15 @@
 .page-content {
-  margin-left: 70px; /* Lățimea sidebar-ului */
-  padding-top: 0px; /* Evită suprapunerea cu navbar-ul */
-  width: calc(100% - 70px); /* Compensează lățimea sidebar-ului */
-  min-height: calc(100vh - 10px); /* Asigură o înălțime minimă pentru a lăsa loc footer-ului */
+  margin-left: 70px;
+  padding-top: 0px;
+  width: calc(100% - 70px);
+  min-height: calc(100vh - 10px);
 }
 
 main {
   background-color: gray;
-  margin-left: 70px; /* Lasă loc pentru sidebar */
-  margin-top: 30px; /* Evită suprapunerea cu navbar-ul */
-  flex-grow: 1; /* Permite conținutului să ocupe restul spațiului disponibil */
+  margin-left: 70px;
+  margin-top: 30px;
+  flex-grow: 1;
   z-index: 1;
 }
 
@@ -57,19 +57,42 @@ button {
   border-radius: 5px;
 }
 
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal textarea {
+  width: 300px;
+  height: 150px;
+}
+
+.modal button {
+  margin-top: 10px;
+}
+
 /* Footer  */
 footer .d-flex {
   display: flex;
   flex-direction: column;
-  height: 100%; /* Întinde întreaga înălțime a paginii */
+  height: 100%;
 }
 
 .flex-grow-1 {
-  flex-grow: 1; /* Permite conținutului să ocupe restul spațiului disponibil */
+  flex-grow: 1;
 }
 
 footer {
-  margin-top: auto; /* Împinge footer-ul în jos */
+  margin-top: auto;
 }
 
 
@@ -138,12 +161,12 @@ footer {
 
 /*Navbar styles*/
 .custom-navbar, .colordiv{
-  background-color: #123456 !important; /* Fundal personalizat */
+  background-color: #123456 !important;
   padding: 15px 20px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 1200px;
-  width: calc(100% - 250px); /* Compensează sidebar-ul */
-  margin-left: 250px; /* Evită suprapunerea */
+  width: calc(100% - 250px);
+  margin-left: 250px;
   animation: animate 4s linear infinite;
   box-shadow: 0 0 10px green,
               0 0 10px deepskyblue;
@@ -169,7 +192,7 @@ filter: hue-rotate(360deg);
 }
 
 .custom-navbar .nav-link:hover {
-  color: #f8b400 !important; /* Schimbă culoarea la hover */
+  color: #f8b400 !important;
 }
 
 
@@ -186,8 +209,8 @@ filter: hue-rotate(360deg);
 }
 
 .search-bar {
-  flex-grow: 1; /* Ocupă tot spațiul disponibil */
-  max-width: 400px; /* Setează o lățime maximă */
+  flex-grow: 1;
+  max-width: 400px;
 }
 
 .search-bar input {
@@ -202,15 +225,15 @@ filter: hue-rotate(360deg);
 }
 
 
-/* Styles for sidebar  */
+/* sidebar  */
 .sidebar {
-  width: 70px; /* Lățimea sidebar-ului */
-  height: 100vh; /* Ocupă toată înălțimea ecranului */
-  position: fixed; /* Fix pe partea stângă */
+  width: 70px;
+  height: 100vh;
+  position: fixed;
   top: 0;
   left: 0;
    font-size: 24px;
-  background-color: #343a40; /* Fundal închis */
+  background-color: #343a40;
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -228,7 +251,7 @@ filter: hue-rotate(360deg);
 }
 
 .sidebar .nav-link:hover {
-  background: #495057; /* Culoare mai deschisă la hover */
+  background: #495057;
     border-radius: 10px;
 
 }
@@ -240,7 +263,7 @@ filter: hue-rotate(360deg);
 }
 
 .sidebar .logout-button {
-  margin-top: auto; /* Împinge butonul de logout în jos */
+  margin-top: auto;
   width: 100%;
   background: red;
   border: none;
@@ -251,7 +274,7 @@ filter: hue-rotate(360deg);
 }
 
 .content {
-  margin-left: 70px; /* Spațiu pentru sidebar */
+  margin-left: 70px;
   padding: 20px;
   width: calc(100% - 250px);
   height: 100%;
@@ -259,7 +282,6 @@ filter: hue-rotate(360deg);
 
 
 /* Personalizare pagina welcome */
-/* Stiluri pentru containerul Welcome */
 .welcome-container {
   color: white;
   min-height: 100vh;
@@ -270,7 +292,7 @@ filter: hue-rotate(360deg);
 }
 
 .custom-lead {
-  color: white; /* Setează culoarea textului alb */
+  color: white;
 }
 
 
@@ -284,20 +306,20 @@ filter: hue-rotate(360deg);
 /* Stiluri pentru titlu */
 .custom-heading {
   font-size: 3rem;
-  color: #123456; /* Personalizează culoarea */
+  color: #123456;
   font-weight: bold;
 }
 
 /* Stiluri pentru paragrafe */
 .custom-lead {
   font-size: 1.25rem;
-  color: #333333; /* Culoare text */
+  color: #333333;
   margin-bottom: 20px;
 }
 
 /* Stiluri pentru butonul Login */
 .custom-btn {
-  background-color: #f8b400; /* Culoare personalizată */
+  background-color: #f8b400;
   border: none;
   font-size: 1rem;
   padding: 15px 30px;
@@ -306,7 +328,7 @@ filter: hue-rotate(360deg);
 }
 
 .custom-btn:hover {
-  background-color: #f8a500; /* Culoare la hover */
+  background-color: #f8a500;
 }
 
 
@@ -367,22 +389,189 @@ body{
 }
 
 
-/* În cover.css sau fișierul CSS relevant */
-
 .chat-box {
   height: 400px;
   overflow-y: auto;
   background-color: #333;
   padding: 10px;
   border-radius: 10px;
-  word-wrap: break-word; /* Asigură că textul lung se rupe la linia următoare */
+  word-wrap: break-word;
 }
 
 .chat-box .badge {
-  display: inline-block; /* Asigură că elementul este tratat ca un bloc în linie */
-  max-width: 100%; /* Limitează lățimea la 100% */
-  word-wrap: break-word; /* Asigură împărțirea cuvintelor lungi */
-  white-space: pre-wrap; /* Permite ruperea cuvintelor pe mai multe linii */
+  display: inline-block;
+  max-width: 100%;
+  word-wrap: break-word;
+  white-space: pre-wrap;
   padding: 10px;
   margin: 5px;
+}
+
+
+/* Inbox.css */
+
+/* Stiluri generale pentru pagina Inbox */
+.inbox-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  position: relative;
+}
+
+/* Stiluri pentru badge-ul de notificare */
+.notification-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* Restul stilurilor rămân aceleași ca mai sus */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: background-color 0.3s ease;
+}
+
+li:hover {
+  background-color: #f1f1f1;
+}
+
+strong {
+  color: #333;
+}
+
+small {
+  display: block;
+  margin-top: 10px;
+  color: #888;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.no-messages {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+}
+/* Inbox.css */
+
+/* Stiluri generale pentru pagina Inbox */
+.inbox-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  font-size: 2rem;
+  color: #333;
+  position: relative;
+}
+
+/* Stiluri pentru badge-ul de notificare */
+.notification-badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff4d4d;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: bold;
+  display: inline-block;
+}
+
+/* Stiluri pentru mesajele citite și necitite */
+
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+li {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  padding: 15px;
+  transition: background-color 0.3s ease;
+}
+
+li:hover {
+  background-color: #f1f1f1;
+}
+
+strong {
+  color: #333;
+}
+
+small {
+  display: block;
+  margin-top: 10px;
+  color: #888;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.no-messages {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #888;
+}
+.unread {
+  background-color: green;
+  font-weight: bold;
+}
+
+.read {
+  background-color: #ffffff;
+}
+
+.notification-badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 4px 8px;
+  margin-left: 10px;
+  font-size: 0.9rem;
 }

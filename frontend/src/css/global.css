@@ -30,8 +30,8 @@ body{
 }
 
 .page-content {
-  margin-left: 250px; /* Asigură lățimea sidebar-ului */
-  padding-top: 70px; /* Evită suprapunerea cu navbar-ul */
-  width: calc(100% - 250px); /* Compensează lățimea sidebar-ului */
-  min-height: calc(100vh - 70px); /* Ajustează pentru navbar și footer */
+  margin-left: 250px;
+  padding-top: 70px;
+  width: calc(100% - 250px);
+  min-height: calc(100vh - 70px);
 }

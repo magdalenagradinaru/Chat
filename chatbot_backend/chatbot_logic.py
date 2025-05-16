@@ -21,6 +21,5 @@ def get_chatbot_response(user_input):
         return get_gpt_response(user_input)
 
     except Exception as e:
-        # Logarea erorii (poți înlocui cu un logger mai complex dacă ai nevoie)
         print(f"Error while getting response: {str(e)}")
         return "Îmi pare rău, am întâmpinat o problemă la procesarea cererii tale. Încearcă din nou mai târziu."

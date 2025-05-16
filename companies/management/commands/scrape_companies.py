@@ -11,7 +11,7 @@ def scrape_companies():
         soup = BeautifulSoup(response.content, 'html.parser')
         companies = []
 
-        # Exemple de extragere a datelor despre companii (adaptat pentru site-ul respectiv)
+        # extragere a datelor despre companii (adaptat pentru site-ul respectiv)
         for company in soup.find_all('div', class_='company-info'):
             name = company.find('h3').text.strip()
             website = company.find('a', href=True)['href']

@@ -1,24 +1,19 @@
 import re
-from companies.management.commands import scrape_companies
+from companies.management.commands.scrape_companies import scrape_companies
 from companies.models import CompanyJob
 
 def extract_company_name(user_input):
-    """
-    Extrage un nume de companie din input-ul utilizatorului.
-    Se presupune că numele companiilor sunt cuvinte sau fraze cu litere mari (ex. 'Google Inc.').
-    """
+
+#Extrage un nume de companie din input-ul utilizatorului.
     matches = re.findall(r'\b[A-Z][a-z]+\s(?:[A-Z][a-z]+)?\b', user_input)
     if matches:
-        return matches[0]  # presupune primul ca fiind numele companiei
+        return matches[0]
     return None
 
 def get_company_info_from_scraper(user_input):
-    """
-    Căutăm informațiile despre companie, iar dacă nu le găsim în baza de date,
-    rulăm scraper-ul pentru a le adăuga.
-    """
-    company_name = extract_company_name(user_input)
 
+# Căutăm informațiile despre companie, iar dacă nu le găsim în baza de date,rulăm scraper-ul pentru a le adăuga.
+    company_name = extract_company_name(user_input)
     if company_name:
         # Verificăm în baza de date dacă compania există deja
         company = CompanyJob.objects.filter(company_name__icontains=company_name).first()
@@ -32,7 +27,7 @@ def get_company_info_from_scraper(user_input):
             )
 
         # Dacă nu o găsim, rulăm scraper-ul pentru a actualiza datele
-        companies = scrape_companies()  # Poți implementa mai multe funcții de scraping dacă este necesar
+        companies = scrape_companies()
         if companies:
             for company_data in companies:
                 # Adăugăm sau actualizăm compania

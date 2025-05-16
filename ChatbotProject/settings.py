@@ -84,13 +84,19 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
 
+# Configurarea Celery
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_TIMEZONE = 'UTC'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # Sau alt server SMTP
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'gradinaru.madalina8@gmail.com'  # Email-ul tău
+EMAIL_HOST_USER = 'gradinaru.madalina8@gmail.com'
 EMAIL_HOST_PASSWORD = 'gbqk aqyh upsd awzh'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
@@ -119,7 +125,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ChatbotProject.wsgi.application'
 
-LOGIN_REDIRECT_URL = 'http://localhost:3000/login'  # sau URL-ul de producție
+LOGIN_REDIRECT_URL = 'http://localhost:3000/login'
 LOGOUT_REDIRECT_URL = '/'
 
 # Database

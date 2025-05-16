@@ -1,84 +1,131 @@
-
 {
   "intents": [
     {
       "tag": "greeting",
       "patterns": [
-        "Hi",
-        "Hey",
-        "How are you",
-        "Is anyone there?",
-        "Hello",
-        "Good day"
+        "Buna",
+        "Salut",
+        "Ce mai faci?",
+        "Este cineva aici?",
+        "Buna ziua",
+        "O zi buna"
       ],
       "responses": [
-        "Hey :-)",
-        "Hello, thanks for visiting",
-        "Hi there, what can I do for you?",
-        "Hi there, how can I help?"
+        "Salut! Bine ai venit pe platforma noastra IT Company! Cum pot sa te ajut? :-) "
       ]
     },
     {
       "tag": "goodbye",
-      "patterns": ["Bye", "See you later", "Goodbye"],
+      "patterns": ["Pa", "Ne vedem mai tarziu", "La revedere"],
       "responses": [
-        "See you later, thanks for visiting",
-        "Have a nice day",
-        "Bye! Come back again soon."
+        "La revedere, multumim ca ne-ai vizitat",
+        "O zi placuta",
+        "Pa! Te asteptam din nou!"
       ]
     },
     {
       "tag": "thanks",
-      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
-      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+      "patterns": ["Multumesc", "Iti multumesc", "A fost util", "Multumesc mult!"],
+      "responses": ["Cu placere!", "Oricand!", "Ma bucur ca am putut ajuta"]
+    },
+    {
+      "tag": "login",
+      "patterns": [
+        "Cum ma loghez?",
+        "Unde este pagina de logare?",
+        "Cum accesez contul?"
+      ],
+      "responses": [
+        "Pentru a te loga, acceseaza pagina de login din meniul principal. Va trebui sa introduci numele de utilizator si parola. Daca nu ai un cont, poti sa te inregistrezi dand click pe 'Inregistreaza-te'.",
+        "Pentru a accesa contul, mergi pe pagina de login si introduce credentile tale. Daca ai uitat parola, apasa pe 'Am uitat parola' pentru a o reseta."
+      ]
+    },
+    {
+      "tag": "edit_profile",
+      "patterns": [
+        "Cum imi editez profilul?",
+        "Vreau sa imi actualizez informatiile personale",
+        "Pot sa imi schimb adresa de email?"
+      ],
+      "responses": [
+        "Pentru a-ti edita profilul, acceseaza pagina de setari a profilului dupa ce te loghezi. Poti actualiza detalii precum numele, emailul si numarul de telefon.",
+        "Pentru a modifica informatiile, mergi pe pagina setarilor profilului. Vei putea actualiza detaliile tale personale, dar emailul si categoria sunt fixe."
+      ]
+    },
+    {
+      "tag": "security",
+      "patterns": [
+        "Cat de sigur este contul meu?",
+        "Ce masuri de securitate sunt implementate?",
+        "Cum imi protejez contul?"
+      ],
+      "responses": [
+        "Luam securitatea in serios. Contul tau este protejat prin criptare puternica si oferim autentificare in doi pasi (2FA) pentru un plus de siguranta.",
+        "Contul tau este securizat cu criptare si autentificare in doi pasi. Asigura-te intotdeauna ca parola ta este puternica si unica."
+      ]
+    },
+    {
+      "tag": "how_to_ask",
+      "patterns": [
+        "Cum pot pune intrebari?",
+        "Cum interacționez cu chatbot-ul?",
+        "Ma poti ajuta cu ceva?"
+      ],
+      "responses": [
+        "Poti intreba orice legat de platforma noastra! Incearca sa intrebi despre contul tau, setarile profilului sau functionalitatile disponibile.",
+        "Pentru a pune o intrebare, scrie pur si simplu intrebarea ta. Daca chatbot-ul nu stie raspunsul, va incerca sa ofere ajutor general sau va trimite cererea ta catre echipa de suport."
+      ]
+    },
+    {
+      "tag": "interaction_companies",
+      "patterns": [
+        "Cum interacționez cu companiile?",
+        "Ce pot face cu companiile?",
+        "Cum pot contacta o companie?"
+      ],
+      "responses": [
+        "Poti naviga printre companii, vizualiza anunturi de joburi sau le poti contacta direct prin sectiunea 'Contact' de pe pagina lor de profil.",
+        "Pentru a interacționa cu companiile, poti aplica pentru joburile listate pe profilul lor sau le poti contacta folosind detaliile de contact furnizate."
+      ]
     },
     {
       "tag": "items",
       "patterns": [
-        "Which items do you have?",
-        "What kinds of items are there?",
-        "What do you sell?"
+        "Ce articole aveti?",
+        "Ce tipuri de articole exista?",
+        "Ce promovati?"
       ],
       "responses": [
-        "We sell coffee and tea",
-        "We have coffee and tea"
+        "Vanam solutii IT, inclusiv job-uri despre dezvoltare software, integrare de sisteme si solutii cloud."
       ]
     },
     {
-      "tag": "payments",
-      "patterns": [
-        "Do you take credit cards?",
-        "Do you accept Mastercard?",
-        "Can I pay with Paypal?",
-        "Are you cash only?"
-      ],
-      "responses": [
-        "We accept VISA, Mastercard and Paypal",
-        "We accept most major credit cards, and Paypal"
-      ]
+      "tag": "oferts",
+      "patterns": [],
+      "responses": []
     },
     {
       "tag": "delivery",
       "patterns": [
-        "How long does delivery take?",
-        "How long does shipping take?",
-        "When do I get my delivery?"
+        "Oferte job",
+        "Lucru",
+        "angajare"
       ],
       "responses": [
-        "Delivery takes 2-4 days",
-        "Shipping takes 2-4 days"
+        "Pentru a beneficia de anunturile actuale si disponibile de job, introduce numele companiei care te intereseaza si noi iti oferim informatia disponibila.",
+        "Care este numele companiei care te-ar interesa?"
       ]
     },
     {
       "tag": "funny",
       "patterns": [
-        "Tell me a joke!",
-        "Tell me something funny!",
-        "Do you know a joke?"
+        "Spune-mi o gluma!",
+        "Spune-mi ceva amuzant!",
+        "Stii vreo gluma?"
       ],
       "responses": [
-        "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
-        "What did the buffalo say when his son left for college? Bison."
+        "De ce a mers programatorul la banca? Pentru ca isi pierduse 'cache-ul'.",
+        "De ce prefera programatorii modul intunecat? Pentru ca lumina atrage bug-uri."
       ]
     }
   ]

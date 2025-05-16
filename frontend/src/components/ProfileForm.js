@@ -11,6 +11,19 @@ const ProfileForm = ({ setUserProfile }) => {
     biography: ''
   });
   const [message, setMessage] = useState('');
+    const formData = new FormData();
+
+formData.append('full_name', formValues.full_name);
+formData.append('phone_number', formValues.phone_number);
+formData.append('address', formValues.address);
+formData.append('education', formValues.education);
+formData.append('work_experience', formValues.work_experience);
+formData.append('biography', formValues.biography);
+
+if (formValues.profile_picture) {
+  formData.append('profile_picture', formValues.profile_picture);  // Trebuie să fie un File
+}
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -29,13 +42,22 @@ const ProfileForm = ({ setUserProfile }) => {
   const token = localStorage.getItem('access');
   const formData = new FormData();
 
-  for (const key in profile) {
+  const allowedFields = [
+    'phone_number',
+    'address',
+    'profile_picture',
+    'education',
+    'work_experience',
+    'biography'
+  ];
+
+  allowedFields.forEach((key) => {
     if (profile[key] !== null && profile[key] !== undefined) {
       formData.append(key, profile[key]);
     }
-  }
+  });
 
-  console.log("Form data trimis:", formData); // Verifică conținutul formData
+  console.log("Form data trimis:", formData);
 
   try {
     const response = await axios.put('http://127.0.0.1:8000/api/profile/', formData, {
@@ -76,7 +98,7 @@ const ProfileForm = ({ setUserProfile }) => {
     <form onSubmit={handleSubmit}>
       <p>{message}</p>
       <div>
-        <label>Phone Number</label>
+        <label>Număr de telefon</label>
         <input
           type="text"
           name="phone_number"
@@ -85,7 +107,7 @@ const ProfileForm = ({ setUserProfile }) => {
         />
       </div>
       <div>
-        <label>Address</label>
+        <label>Adresă</label>
         <input
           type="text"
           name="address"
@@ -94,7 +116,7 @@ const ProfileForm = ({ setUserProfile }) => {
         />
       </div>
       <div>
-        <label>Profile Picture</label>
+        <label>Fotografie de profil</label>
         <input
           type="file"
           name="profile_picture"
@@ -103,7 +125,7 @@ const ProfileForm = ({ setUserProfile }) => {
         />
       </div>
       <div>
-        <label>Education</label>
+        <label>Educație</label>
         <textarea
           name="education"
           value={profile.education}
@@ -111,7 +133,7 @@ const ProfileForm = ({ setUserProfile }) => {
         />
       </div>
       <div>
-        <label>Work Experience</label>
+        <label>Experiență de lucru</label>
         <textarea
           name="work_experience"
           value={profile.work_experience}
@@ -119,7 +141,7 @@ const ProfileForm = ({ setUserProfile }) => {
         />
       </div>
       <div>
-        <label>Biography</label>
+        <label>Biografie</label>
         <textarea
           name="biography"
           value={profile.biography}

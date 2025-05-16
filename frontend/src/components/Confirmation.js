@@ -1,4 +1,3 @@
-// Confirmation.js
 import React, { useState, useEffect } from "react";
 
 const Confirmation = ({ username = "utilizator", activationLink = "#" }) => {
@@ -6,7 +5,6 @@ const Confirmation = ({ username = "utilizator", activationLink = "#" }) => {
   const [name, setName] = useState(username);
 
   useEffect(() => {
-    // Example fallback for props if undefined externally
     if (!activationLink) setLink("#");
     if (!username) setName("utilizator");
   }, [activationLink, username]);
