@@ -1,11 +1,12 @@
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
 from .chatbot_logic import get_chatbot_response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .serializers import  LoginSerializer, RegisterSerializer
+from .serializers import LoginSerializer, RegisterSerializer, PublicProfileSerializer
 from django.contrib.auth.models import User
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
@@ -116,6 +117,8 @@ class RegisterView(APIView):
             )
 
             return Response({'message': 'Înregistrare reușită. Verifică email-ul pentru confirmare.'}, status=status.HTTP_201_CREATED)
+
+        print("Erori la validare:", serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -170,12 +173,24 @@ class UserProfileAPIView(APIView):
             return Response({'error': 'Profilul nu există.'}, status=404)
 
     def put(self, request):
-        profile = request.user.userprofile
+        profile = request.user.profile
         serializer = UserProfileSerializer(profile, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=400)
+
+
+class PublicProfileView(APIView):
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            profile = UserProfile.objects.get(user=user)
+        except (User.DoesNotExist, UserProfile.DoesNotExist):
+            return Response({"detail": "Profilul nu a putut fi găsit."}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = UserProfileSerializer(profile)
+        return Response(serializer.data)
 
 # Post view.................................................................................
 class PostAPIView(APIView):
@@ -266,3 +281,5 @@ class InboxMessagesView(APIView):
             message.save()
 
         return Response({'status': 'Mesaj marcat ca citit'}, status=status.HTTP_200_OK)
+
+

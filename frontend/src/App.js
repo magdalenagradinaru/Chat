@@ -6,6 +6,7 @@ import Register from "./Pages/Register";
 import Welcome from "./Pages/Welcome";
 import Profile from "./Pages/Profile";
 import Chatbot from "./Pages/Chatbot";
+import PublicProfile from "./Pages/PublicProfile";
 import Inbox from "./Pages/Inbox";
 import AboutPage from "./Pages/AboutPage";
 import "./css/global.css";
@@ -53,6 +54,10 @@ function App() {
               <Profile />
             </ProtectedRoute>
           }
+        />
+        <Route
+          path="/profile/:username"
+          element={<PublicProfile />}
         />
          <Route
           path="/inbox"

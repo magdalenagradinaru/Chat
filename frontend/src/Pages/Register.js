@@ -91,8 +91,8 @@ const Register = () => {
 
       <select value={category} onChange={(e) => setCategory(e.target.value)} required className="register-input">
         <option value="">Selectează categoria</option>
-        <option value="consumator">Consumator</option>
-        <option value="companie">Companie</option>
+        <option value="consumer">Consumator</option>
+        <option value="company">Companie</option>
       </select>
 
       <div className="mt-3">

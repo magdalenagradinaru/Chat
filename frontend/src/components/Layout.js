@@ -17,29 +17,29 @@ const Layout = ({ children }) => {
         <Nav className="flex-column">
           <Nav.Link href="/intro" className="nav-link"><FaHome /></Nav.Link>
           <Nav.Link href="/profile" className="nav-link"><FaUser /></Nav.Link>
-          <Nav.Link href="/about" className="nav-link"><FaEnvelope /></Nav.Link>
           <Nav.Link href="/chatbot" className="nav-link"><FaComments /></Nav.Link>
-          <Nav.Link href="/inbox" className="nav-link"><FaInbox /> </Nav.Link> {/* Adăugat linkul pentru Inbox */}
+          <Nav.Link href="/inbox" className="nav-link"><FaInbox /> </Nav.Link>
+          <Nav.Link href="/about" className="nav-link"><FaEnvelope /></Nav.Link>
         </Nav>
       </div>
 
-      {/* Conținutul paginii */}
+     {/* Conținutul paginii */}
       <div className="flex-grow-1 d-flex flex-column">
-        <header className="custom-navbar bg-dark text-white px-3 py-2">
-          <Container fluid className="d-flex align-items-center">
-            <Navbar.Brand href="#" className="navbar-logo text-white">
-              <img src="/mylogo.png" alt="Logo" style={{ height: "40px", marginRight: "10px" }} />
-              IT Community
-            </Navbar.Brand>
+        <header className="appbar">
+          {/* brand */}
+          <a href="/intro" className="brand">
+            <img
+              src="/mylogo.png"
+              alt="Logo"
+              style={{ height: 40, marginRight: 8 }}
+            />
+            IT Community
+          </a>
 
-            <Form className="search-bar mx-auto">
-              <Form.Control type="text" placeholder="Caută..." />
-            </Form>
-
-            <div>
-              <LogoutButton />
-            </div>
-          </Container>
+          {/* Logout pe dreapta */}
+          <div className="logout-wrapper">
+            <LogoutButton />
+          </div>
         </header>
 
         {/* Main Content */}

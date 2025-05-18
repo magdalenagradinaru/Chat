@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Layout from "../components/Layout";
 import SendMessageButton from "../components/SendMessageButton";
+import { Link } from "react-router-dom";
+
 
 const Intro = () => {
   const [posts, setPosts] = useState([]);
@@ -113,8 +115,16 @@ const Intro = () => {
               }}
             >
               <p style={{ marginBottom: "8px" }}>
-                <strong>{post.author}</strong>
-              </p>
+  <strong>
+    <Link
+      to={`/profile/${post.author}`}
+      style={{ textDecoration: "none", color: "#007bff" }}
+    >
+      {post.author}
+    </Link>
+  </strong>
+</p>
+
               <p style={{ marginBottom: "12px" }}>{post.content}</p>
               <button
                 onClick={() => openEmailModal(post.author_email, post.id)}

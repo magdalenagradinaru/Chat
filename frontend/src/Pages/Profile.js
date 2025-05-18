@@ -11,18 +11,27 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUserProfile = async () => {
-      try {
-        const token = localStorage.getItem('access');
-        const response = await axios.get('http://127.0.0.1:8000/api/profile/', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          }
-        });
-        setUserProfile(response.data);
-      } catch (error) {
-        console.error("Nu s-au putut prelua datele de profil:", error);
+  try {
+    const token = localStorage.getItem('access');
+    if (!token) {
+      console.error("Nu există token JWT în localStorage.");
+      return;
+    }
+    const response = await axios.get('http://127.0.0.1:8000/api/profile/', {
+      headers: {
+        Authorization: `Bearer ${token}`,
       }
-    };
+    });
+    setUserProfile(response.data);
+  } catch (error) {
+    console.error("Nu s-au putut prelua datele de profil:", error);
+    if (error.response) {
+      console.error("Status:", error.response.status);
+      console.error("Data:", error.response.data);
+    }
+  }
+};
+
 
     fetchUserProfile();
   }, []);
@@ -66,8 +75,16 @@ const Profile = () => {
                   <ProfileDetail label="Adresă" value={userProfile.address} />
                    <ProfileDetail label="Educație" value={userProfile.education} />
                   <ProfileDetail label="Experiență de muncă" value={userProfile.work_experience} />
-                  <ProfileDetail label="Biografie" value={userProfile.biography} />
-
+<ProfileDetail
+  label="Biografie"
+  value={
+    userProfile.biography ? (
+      <a href={userProfile.biography} target="_blank" rel="noopener noreferrer">
+        {userProfile.biography}
+      </a>
+    ) : "N/A"
+  }
+/>
                   {/* Afișează formularul pentru editare */}
                   <div className="row">
                     <div className="col-sm-12">

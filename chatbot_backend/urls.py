@@ -2,7 +2,7 @@ from django.urls import path, include
 
 from . import views
 from .views import ChatViewSet, get_csrf_token, RegisterView, LogoutView, LoginView, UserProfileAPIView, PostAPIView, \
-    InboxMessagesView
+    InboxMessagesView, PublicProfileView
 from .views import ActivateAccountView
 from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.routers import DefaultRouter
@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/get-csrf-token/', get_csrf_token, name='get_csrf_token'),
     path('api/messages/inbox/', InboxMessagesView.as_view(), name='inbox-messages'),
     path('api/messages/<int:pk>/mark_read/', InboxMessagesView.as_view(), name='mark-message-read'),
+    path('api/profile/<str:username>/', PublicProfileView.as_view(), name='public-profile'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

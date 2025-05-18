@@ -55,6 +55,9 @@ class RegisterSerializer(serializers.Serializer):
 
         return user
 
+class ProfileAttachmentSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['id', 'title', 'url']
 
 # Include email din modelul User (prin relația OneToOneField)..................................
 class UserProfileSerializer(serializers.ModelSerializer):
@@ -66,6 +69,33 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'username','user', 'email', 'phone_number', 'address', 'profile_picture',
                   'education', 'work_experience', 'biography', 'category']
         read_only_fields = ['user', 'email']
+
+    def update(self, instance, validated_data):
+        attachments_data = validated_data.pop('attachments', None)
+        profile = super().update(instance, validated_data)
+
+
+        return profile
+
+class PublicProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="user.username", read_only=True)
+    email = serializers.EmailField(source="user.email", read_only=True)
+    full_name = serializers.CharField(source="user.get_full_name", read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = [
+            "username",
+            "email",
+            "full_name",
+            "phone_number",
+            "address",
+            "education",
+            "work_experience",
+            "biography",
+            "profile_picture",
+        ]
+        read_only_fields = fields
 
 # Afișează autorului pentru fiecare postare...................................................
 class PostSerializer(serializers.ModelSerializer):
