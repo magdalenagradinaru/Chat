@@ -58,8 +58,7 @@ const Profile = () => {
                   />
                   <div className="mt-3">
                     <h4>{userProfile.username || "User Name"}</h4> {/* Afișează username-ul */}
-                    <button className="btn btn-primary">Urmăriri</button>
-                    <button className="btn btn-outline-primary">Mesaje</button>
+
                   </div>
                 </div>
               </div>
@@ -68,15 +67,14 @@ const Profile = () => {
               <div className="card mb-3">
                 <div className="card-body">
                   {/* Afișează detalii adiționale înainte de butonul de editare */}
-                 <ProfileDetail label="Nume complet" value={userProfile.full_name} />
                   <ProfileDetail label="Categorie" value={userProfile.category} />
                   <ProfileDetail label="Email" value={userProfile.email} />
                   <ProfileDetail label="Număr de telefon" value={userProfile.phone_number} />
-                  <ProfileDetail label="Adresă" value={userProfile.address} />
-                   <ProfileDetail label="Educație" value={userProfile.education} />
-                  <ProfileDetail label="Experiență de muncă" value={userProfile.work_experience} />
+                  <ProfileDetail label="Adresă fizică" value={userProfile.address} />
+                   <ProfileDetail label="Educație / Descriere" value={userProfile.education} />
+                  <ProfileDetail label="Experiență de muncă / Oportunități oferite" value={userProfile.work_experience} />
 <ProfileDetail
-  label="Biografie"
+  label="Portofoliu / Website"
   value={
     userProfile.biography ? (
       <a href={userProfile.biography} target="_blank" rel="noopener noreferrer">

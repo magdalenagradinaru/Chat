@@ -5,7 +5,8 @@ const ProfileForm = ({ setUserProfile }) => {
   const [profile, setProfile] = useState({
     phone_number: "",
     address: "",
-    profile_picture: null,
+    profile_picture: null,       // fișier încărcat nou
+    profile_picture_url: "",     // url-ul pozei curente (string)
     education: "",
     work_experience: "",
     biography: "",
@@ -43,19 +44,61 @@ const ProfileForm = ({ setUserProfile }) => {
       "biography",
     ];
     const fd = new FormData();
-    allowed.forEach((k) => profile[k] && fd.append(k, profile[k]));
+    allowed.forEach((k) => {
+      if (k === "profile_picture") {
+        // trimite poza doar dacă e un fișier (File), nu URL string sau null
+        if (profile.profile_picture instanceof File) {
+          fd.append(k, profile.profile_picture);
+        }
+      } else {
+        if (profile[k]) {
+          fd.append(k, profile[k]);
+        }
+      }
+    });
 
     try {
       const { data } = await axios.put(
         "http://127.0.0.1:8000/api/profile/",
         fd,
-        { headers: { Authorization: `Bearer ${token}`, "Content-Type": "multipart/form-data" } }
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
       setUserProfile(data);
+      // Actualizăm local state — să resetăm profile_picture (fișierul)
+      setProfile((prev) => ({
+        ...prev,
+        profile_picture: null,
+        profile_picture_url: data.profile_picture || prev.profile_picture_url,
+      }));
       setMessage("Profil actualizat cu succes!");
     } catch (err) {
       console.error(err);
-      setMessage("A apărut o eroare la salvare.");
+
+      if (err.response && err.response.data) {
+        const errors = err.response.data;
+        let errorMessages = [];
+
+        if (typeof errors === "object" && !Array.isArray(errors)) {
+          for (const key in errors) {
+            if (Array.isArray(errors[key])) {
+              errorMessages.push(`${key}: ${errors[key].join(", ")}`);
+            } else {
+              errorMessages.push(`${key}: ${errors[key]}`);
+            }
+          }
+        } else {
+          errorMessages.push(errors.toString());
+        }
+
+        setMessage(`Eroare la salvare: ${errorMessages.join(" | ")}`);
+      } else {
+        setMessage("A apărut o eroare la salvare.");
+      }
     }
   };
 
@@ -69,7 +112,16 @@ const ProfileForm = ({ setUserProfile }) => {
         const { data } = await axios.get("http://127.0.0.1:8000/api/profile/", {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setProfile((prev) => ({ ...prev, ...data }));
+        setProfile((prev) => ({
+          ...prev,
+          phone_number: data.phone_number || "",
+          address: data.address || "",
+          education: data.education || "",
+          work_experience: data.work_experience || "",
+          biography: data.biography || "",
+          profile_picture: null,               // resetăm fișierul încărcat
+          profile_picture_url: data.profile_picture || "", // URL poza curentă
+        }));
       } catch (err) {
         console.error(err);
         setMessage("Nu s-a putut încărca profilul.");
@@ -82,7 +134,11 @@ const ProfileForm = ({ setUserProfile }) => {
   return (
     <form className="card shadow-sm p-4" onSubmit={handleSubmit}>
       {message && (
-        <div className={`alert ${message.includes("succes") ? "alert-success" : "alert-danger"} mb-4`}>
+        <div
+          className={`alert ${
+            message.includes("succes") ? "alert-success" : "alert-danger"
+          } mb-4`}
+        >
           {message}
         </div>
       )}
@@ -102,7 +158,7 @@ const ProfileForm = ({ setUserProfile }) => {
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">Adresă</label>
+          <label className="form-label">Adresă fizică</label>
           <input
             type="text"
             className="form-control"
@@ -118,6 +174,16 @@ const ProfileForm = ({ setUserProfile }) => {
       <div className="row g-3 mt-3">
         <div className="col-md-6">
           <label className="form-label">Fotografie de profil</label>
+          {/* Afișăm poza curentă dacă există */}
+          {profile.profile_picture_url && (
+            <div className="mb-2">
+              <img
+                src={profile.profile_picture_url}
+                alt="Profil"
+                style={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
+              />
+            </div>
+          )}
           <input
             type="file"
             className="form-control"
@@ -127,14 +193,14 @@ const ProfileForm = ({ setUserProfile }) => {
         </div>
 
         <div className="col-md-6">
-          <label className="form-label">Link către lucrări / portofoliu</label>
+          <label className="form-label">Portofoliu / Website</label>
           <input
             type="url"
             className="form-control"
             name="biography"
             value={profile.biography}
             onChange={handleInputChange}
-            placeholder="https://exemplu.com/despre-mine"
+            placeholder="https://exemplu.com/"
           />
         </div>
       </div>
@@ -142,19 +208,18 @@ const ProfileForm = ({ setUserProfile }) => {
       {/* Row 3 – textareas */}
       <div className="row g-3 mt-3">
         <div className="col-12">
-          <label className="form-label">Educație</label>
+          <label className="form-label">Educație / Descriere</label>
           <textarea
             className="form-control"
             rows="2"
             name="education"
             value={profile.education}
             onChange={handleInputChange}
-            placeholder="Facultatea de Informatică, UTM (2021-2025)"
           />
         </div>
 
         <div className="col-12">
-          <label className="form-label">Experiență de lucru</label>
+          <label className="form-label">Experiență de lucru/ Oportunități oferite</label>
           <textarea
             className="form-control"
             rows="2"

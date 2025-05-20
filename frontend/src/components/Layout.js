@@ -1,52 +1,92 @@
+/* ───────────── Layout.jsx ───────────── */
 import React, { useState } from "react";
-import { Navbar, Nav, Container, Form } from "react-bootstrap";
+import { Nav, OverlayTrigger, Tooltip } from "react-bootstrap";
 import "../css/cover.css";
-import { FaHome, FaUser, FaEnvelope, FaComments, FaInbox } from "react-icons/fa"; // Importăm iconița pentru Inbox
+
+import {
+  FaHome,
+  FaUser,
+  FaEnvelope,
+  FaComments,
+  FaInbox,
+} from "react-icons/fa";
+
 import LogoutButton from "../components/LogoutButton";
 import Chatbot from "../components/Chatbot";
 
 const Layout = ({ children }) => {
   const [isChatbotOpen, setChatbotOpen] = useState(false);
-
-  const toggleChatbot = () => setChatbotOpen(prev => !prev);
+  const toggleChatbot = () => setChatbotOpen((prev) => !prev);
 
   return (
     <div className="d-flex min-vh-100">
-      {/* Sidebar-ul vertical */}
-      <div className="sidebar">
-        <Nav className="flex-column">
-          <Nav.Link href="/intro" className="nav-link"><FaHome /></Nav.Link>
-          <Nav.Link href="/profile" className="nav-link"><FaUser /></Nav.Link>
-          <Nav.Link href="/chatbot" className="nav-link"><FaComments /></Nav.Link>
-          <Nav.Link href="/inbox" className="nav-link"><FaInbox /> </Nav.Link>
-          <Nav.Link href="/about" className="nav-link"><FaEnvelope /></Nav.Link>
+      {/* ───── Sidebar vertical ───── */}
+      <div className="sidebar mt-5 px-2">
+        <Nav className="flex-column gap-2">
+          <Nav.Link
+            href="/intro"
+            className="nav-link d-flex flex-column align-items-center"
+          >
+            <FaHome size={20} />
+            <small>Acasă</small>
+          </Nav.Link>
+
+          <Nav.Link
+            href="/profile"
+            className="nav-link d-flex flex-column align-items-center"
+          >
+            <FaUser size={20} />
+            <small>Profil</small>
+          </Nav.Link>
+
+          <Nav.Link
+            as="button"
+            onClick={toggleChatbot}
+            className="nav-link d-flex flex-column align-items-center"
+          >
+            <FaComments size={20} />
+            <small>Chatbot</small>
+          </Nav.Link>
+
+          <OverlayTrigger
+            placement="right"
+            overlay={<Tooltip id="tt-inbox">Inbox</Tooltip>}
+          >
+            <Nav.Link
+              href="/inbox"
+              className="nav-link d-flex flex-column align-items-center"
+            >
+              <FaInbox size={20} />
+              <small>Inbox</small>
+            </Nav.Link>
+          </OverlayTrigger>
+
+          <Nav.Link
+            href="/about"
+            className="nav-link d-flex flex-column align-items-center"
+          >
+            <FaEnvelope size={20} />
+            <small>Despre</small>
+          </Nav.Link>
         </Nav>
       </div>
 
-     {/* Conținutul paginii */}
+      {/* ───── Conținut principal ───── */}
       <div className="flex-grow-1 d-flex flex-column">
-        <header className="appbar">
-          {/* brand */}
-          <a href="/intro" className="brand">
-            <img
-              src="/mylogo.png"
-              alt="Logo"
-              style={{ height: 40, marginRight: 8 }}
-            />
-            IT Community
+        {/* Top AppBar */}
+        <header className="appbar d-flex align-items-center px-3 ps-3">
+          <a href="/intro" className="brand d-flex align-items-center gap-2">
+            <img src="/mylogo.png" alt="Logo" style={{ height: 40 }} />
+            <span className="fw-bold">IT Community</span>
           </a>
-
-          {/* Logout pe dreapta */}
-          <div className="logout-wrapper">
+          <div className="ms-auto">
             <LogoutButton />
           </div>
         </header>
 
-        {/* Main Content */}
-        <main role="main" className="inner cover flex-grow-1 p-1">
+        {/* Main */}
+        <main className="inner cover flex-grow-1 p-2 mt-1">
           {children}
-
-          {/* Afișăm Chatbot-ul in cazul popup */}
           {isChatbotOpen && (
             <div className="chatbot-container">
               <Chatbot closeChatbot={toggleChatbot} />
@@ -55,14 +95,47 @@ const Layout = ({ children }) => {
         </main>
 
         {/* Footer */}
-        <footer className="mastfoot bg-dark text-white text-center p-3">
-          <div className="inner">
-            <p>
-              Cover template for <a href="https://getbootstrap.com/" className="text-white">Bootstrap</a>, by{" "}
-              <a href="https://twitter.com/mdo" className="text-white">@mdo</a>.
-            </p>
-          </div>
-        </footer>
+        <footer
+    style={{
+      backgroundColor: '#222',
+      color: '#eee',
+      textAlign: 'center',
+      padding: '1rem',
+      marginTop: 'auto'
+    }}
+  >
+    <p style={{ margin: '0.2rem' }}>© {new Date().getFullYear()} IT Community</p>
+    <p style={{ margin: '0.2rem', opacity: 0.75 }}>Str. Alexei Mateevici 10, Chișinău MD-2040</p>
+    <div style={{ fontSize: '1.5rem', marginTop: '0.5rem' }}>
+      <a
+        href="https://facebook.com/itcommunity"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ margin: '0 10px', color: '#bbb', textDecoration: 'none' }}
+        aria-label="Facebook"
+      >
+        <i className="bi bi-facebook"></i>
+      </a>
+      <a
+        href="https://linkedin.com/company/itcommunity"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ margin: '0 10px', color: '#bbb', textDecoration: 'none' }}
+        aria-label="LinkedIn"
+      >
+        <i className="bi bi-linkedin"></i>
+      </a>
+      <a
+        href="https://github.com/itcommunity"
+        target="_blank"
+        rel="noopener noreferrer"
+        style={{ margin: '0 10px', color: '#bbb', textDecoration: 'none' }}
+        aria-label="GitHub"
+      >
+        <i className="bi bi-github"></i>
+      </a>
+    </div>
+  </footer>
       </div>
     </div>
   );
