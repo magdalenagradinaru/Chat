@@ -1,4 +1,14 @@
-.page-content {
+/* ---------------------- Layout general ---------------------- */
+body {
+  margin-top: 20px;
+  color: white;
+  background-color: black;
+  text-align: left;
+}
+
+/* Structura paginii principale */
+.page-content,
+.content {
   margin-left: 70px;
   padding-top: 0px;
   width: calc(100% - 70px);
@@ -13,188 +23,78 @@ main {
   z-index: 1;
 }
 
-
-
-/* Postari*/
-
-
-/* cover.css sau alt fișier CSS */
-.card {
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-}
-
-.card img {
-  border-radius: 10px 10px 0 0;
-  object-fit: cover;
-  height: 200px;
-}
-
-.card-body {
-  padding: 20px;
-}
-
-.card-title {
-  font-size: 1.5rem;
-  color: #333;
-}
-
-.card-text {
-  font-size: 1rem;
-  color: #555;
-}
-
-.card-text small {
-  color: #777;
-}
-
-button {
-  padding: 10px 15px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  border-radius: 5px;
-}
-
-
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.modal textarea {
-  width: 300px;
-  height: 150px;
-}
-
-.modal button {
-  margin-top: 10px;
-}
-
-/* Footer  */
-footer .d-flex {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-}
-
+/* Flex și spacing */
 .flex-grow-1 {
   flex-grow: 1;
 }
 
-footer {
-  margin-top: auto;
-}
-.footer-icon {
-  font-size: 1.2rem;
-  color: black;
-  text-decoration: none;
-}
-.footer-icon:hover {
-  color: black;
-}
-
-
-/* Chatbot.css */
-.overlay {
+/* ---------------------- Sidebar ---------------------- */
+.sidebar {
+  width: 70px;
+  height: 100vh;
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.popup {
-  background-color: #fff;
+  background-color: #343a40;
   padding: 20px;
-  border-radius: 8px;
-  position: relative;
-  width: 80%;
-  max-width: 500px;
-}
-
-.closeButton {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-}
-
-
-.input-group {
   display: flex;
-  gap: 0.5rem;
+  flex-direction: column;
+  align-items: center;
+  font-size: 24px;
 }
 
-.input-group input {
-  flex: 1;
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
-  border: 1px solid #ddd;
+.sidebar .nav-link {
+  color: #fff !important;
+  font-size: 18px;
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  border-radius: 10px;
+  transition: background 0.3s;
 }
 
-.input-group button {
-  border-radius: 20px;
-  padding: 0.5rem 1rem;
+.sidebar .nav-link:hover {
+  background: #495057;
+}
+
+.sidebar .logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 20px;
+}
+
+.sidebar .logout-button {
+  margin-top: auto;
+  width: 100%;
+  background: red;
   border: none;
+  padding: 10px;
+  color: white;
+  border-radius: 10px;
   cursor: pointer;
 }
 
-.alert-danger {
-  color: #721c24;
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  padding: 0.75rem 1.25rem;
-  margin-bottom: 1rem;
-  border-radius: 0.25rem;
-}
-
-
-/*Navbar styles*/
-.custom-navbar, .colordiv{
+/* ---------------------- Navbar ---------------------- */
+.custom-navbar,
+.colordiv {
   background-color: #123456 !important;
   padding: 15px 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  margin-left: 250px;
   max-width: 1200px;
   width: calc(100% - 250px);
-  margin-left: 250px;
-  animation: animate 4s linear infinite;
-  box-shadow: 0 0 10px green,
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1),
+              0 0 10px green,
               0 0 10px deepskyblue;
-}
-@keyframes animate{
-0%{
-filter: hue-rotate(0deg);
-}
-100%{
-filter: hue-rotate(360deg);
-}
+  animation: animate 4s linear infinite;
 }
 
-
-
-
-
+@keyframes animate {
+  0% { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
 
 .custom-navbar .nav-link {
-  color: #ffffff !important;
+  color: #fff !important;
   font-weight: bold;
   transition: color 0.3s ease-in-out;
 }
@@ -202,7 +102,6 @@ filter: hue-rotate(360deg);
 .custom-navbar .nav-link:hover {
   color: #f8b400 !important;
 }
-
 
 .navbar-logo {
   font-size: 1.5rem;
@@ -232,64 +131,184 @@ filter: hue-rotate(360deg);
   margin-left: 10px;
 }
 
+/* ---------------------- Footer ---------------------- */
+footer {
+  margin-top: auto;
+}
 
-/* sidebar  */
-.sidebar {
-  width: 70px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-   font-size: 24px;
-  background-color: #343a40;
-  padding: 20px;
+footer .d-flex {
   display: flex;
   flex-direction: column;
-  align-items: center;
-}
-
-.sidebar .nav-link {
-  color: #ffffff !important;
-  font-size: 18px;
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  border-radius: 10px;
-  transition: background 0.3s;
-}
-
-.sidebar .nav-link:hover {
-  background: #495057;
-    border-radius: 10px;
-
-}
-
-.sidebar .logo {
-  width: 80px;
-  height: 80px;
-  margin-bottom: 20px;
-}
-
-.sidebar .logout-button {
-  margin-top: auto;
-  width: 100%;
-  background: red;
-  border: none;
-  padding: 10px;
-  color: white;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-.content {
-  margin-left: 70px;
-  padding: 20px;
-  width: calc(100% - 250px);
   height: 100%;
 }
 
+.footer-icon {
+  font-size: 1.2rem;
+  color: black;
+  text-decoration: none;
+}
 
-/* Personalizare pagina welcome */
+.footer-icon:hover {
+  color: black;
+}
+
+/* ---------------------- Carduri (Postări / Profil) ---------------------- */
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  background-color: gray;
+  border: 0;
+}
+
+.card img {
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+  height: 200px;
+}
+
+.card-body {
+  padding: 20px;
+  flex: 1 1 auto;
+  min-height: 1px;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.card-text {
+  font-size: 1rem;
+  color: #555;
+}
+
+.card-text small {
+  color: #777;
+}
+
+/* Alte clase auxiliare */
+.gutters-sm > .col,
+.gutters-sm > [class*="col-"] {
+  padding-right: 8px;
+  padding-left: 8px;
+}
+
+.mb-3,
+.my-3 {
+  margin-bottom: 1rem !important;
+}
+
+.bg-gray-300 {
+  background-color: #e2e8f0;
+}
+
+.h-100 {
+  height: 100% !important;
+}
+
+.shadow-none {
+  box-shadow: none !important;
+}
+
+/* ---------------------- Chatbox ---------------------- */
+.chat-box {
+  height: 400px;
+  overflow-y: auto;
+  background-color: #333;
+  padding: 10px;
+  border-radius: 10px;
+  word-wrap: break-word;
+}
+
+.chat-box .badge {
+  display: inline-block;
+  max-width: 100%;
+  white-space: pre-wrap;
+  padding: 10px;
+  margin: 5px;
+}
+
+/* ---------------------- Pop-up / Modal ---------------------- */
+.modal,
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.modal textarea {
+  width: 300px;
+  height: 150px;
+}
+
+.modal button {
+  margin-top: 10px;
+}
+
+.popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 80%;
+  max-width: 500px;
+}
+
+.closeButton {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+/* ---------------------- Formulare / Input ---------------------- */
+.input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-group input {
+  flex: 1;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+}
+
+.input-group button {
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  border: none;
+  cursor: pointer;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border-radius: 0.25rem;
+}
+
+/* ---------------------- Pagina Welcome ---------------------- */
 .welcome-container {
   color: white;
   min-height: 100vh;
@@ -299,33 +318,24 @@ filter: hue-rotate(360deg);
   text-align: center;
 }
 
-.custom-lead {
-  color: white;
-}
-
-
-/* Stiluri pentru main-ul Welcome */
 .main-welcome {
   max-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
 
-/* Stiluri pentru titlu */
 .custom-heading {
   font-size: 3rem;
   color: #123456;
   font-weight: bold;
 }
 
-/* Stiluri pentru paragrafe */
 .custom-lead {
   font-size: 1.25rem;
   color: #333333;
   margin-bottom: 20px;
 }
 
-/* Stiluri pentru butonul Login */
 .custom-btn {
   background-color: #f8b400;
   border: none;
@@ -339,86 +349,7 @@ filter: hue-rotate(360deg);
   background-color: #f8a500;
 }
 
-
-
-/* Stiluri pentru profil  */
-body{
-    margin-top:20px;
-    color: white;
-    text-align: left;
-    background-color: black;
-}
-.main-body {
-    padding: 15px;
-}
-.card {
-    box-shadow: 0 1px 3px 0 rgba(0,0,0,.1), 0 1px 2px 0 rgba(0,0,0,.06);
-}
-
-.card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    min-width: 0;
-    word-wrap: break-word;
-    background-color: gray;
-    background-clip: border-box;
-    border: 0 solid rgba(0,0,0,.125);
-    border-radius: .25rem;
-}
-
-.card-body {
-    flex: 1 1 auto;
-    min-height: 1px;
-    padding: 1rem;
-}
-
-.gutters-sm {
-    margin-right: -8px;
-    margin-left: -8px;
-}
-
-.gutters-sm>.col, .gutters-sm>[class*=col-] {
-    padding-right: 8px;
-    padding-left: 8px;
-}
-.mb-3, .my-3 {
-    margin-bottom: 1rem!important;
-}
-
-.bg-gray-300 {
-    background-color: #e2e8f0;
-}
-.h-100 {
-    height: 100%!important;
-}
-.shadow-none {
-    box-shadow: none!important;
-}
-
-
-.chat-box {
-  height: 400px;
-  overflow-y: auto;
-  background-color: #333;
-  padding: 10px;
-  border-radius: 10px;
-  word-wrap: break-word;
-}
-
-.chat-box .badge {
-  display: inline-block;
-  max-width: 100%;
-  word-wrap: break-word;
-  white-space: pre-wrap;
-  padding: 10px;
-  margin: 5px;
-}
-
-
-/* Inbox.css */
-
-/* Stiluri generale pentru pagina Inbox */
+/* ---------------------- Inbox Page ---------------------- */
 .inbox-container {
   max-width: 800px;
   margin: 0 auto;
@@ -436,7 +367,6 @@ h1 {
   position: relative;
 }
 
-/* Stiluri pentru badge-ul de notificare */
 .notification-badge {
   position: absolute;
   top: -10px;
@@ -450,7 +380,6 @@ h1 {
   display: inline-block;
 }
 
-/* Restul stilurilor rămân aceleași ca mai sus */
 ul {
   list-style-type: none;
   padding: 0;
@@ -463,179 +392,11 @@ li {
   margin-bottom: 15px;
   padding: 15px;
   transition: background-color 0.3s ease;
-}
-
-li:hover {
-  background-color: #f1f1f1;
-}
-
-strong {
-  color: #333;
-}
-
-small {
-  display: block;
-  margin-top: 10px;
-  color: #888;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid #ddd;
-  margin: 10px 0;
-}
-
-.no-messages {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #888;
-}
-/* Inbox.css */
-
-/* Stiluri generale pentru pagina Inbox */
-.inbox-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  text-align: center;
-  font-size: 2rem;
-  color: #333;
-  position: relative;
-}
-
-/* Stiluri pentru badge-ul de notificare */
-.notification-badge {
-  position: absolute;
-  top: -10px;
-  right: -10px;
-  background-color: #ff4d4d;
-  color: white;
-  padding: 5px 10px;
-  border-radius: 50%;
-  font-size: 1rem;
-  font-weight: bold;
-  display: inline-block;
-}
-
-/* Stiluri pentru mesajele citite și necitite */
-
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  padding: 15px;
-  transition: background-color 0.3s ease;
-}
-
-li:hover {
-  background-color: #f1f1f1;
-}
-
-strong {
-  color: #333;
-}
-
-small {
-  display: block;
-  margin-top: 10px;
-  color: #888;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid #ddd;
-  margin: 10px 0;
-}
-
-.no-messages {
-  text-align: center;
-  font-size: 1.2rem;
-  color: #888;
 }
 .unread {
-  background-color: green;
-  font-weight: bold;
+  background-color: #d4edda; /* verde deschis */
 }
 
 .read {
-  background-color: #ffffff;
-}
-
-.notification-badge {
-  background-color: red;
-  color: white;
-  border-radius: 50%;
-  padding: 4px 8px;
-  margin-left: 10px;
-  font-size: 0.9rem;
-}
-
-
-/* Header-ul general */
-.appbar {
-  display: flex;
-  justify-content: space-between; /* brand în stânga, logout în dreapta */
-  align-items: center;
-  background-color: #222; /* un gri închis */
-  padding: 0 20px;
-  height: 60px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  color: white;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  position: sticky; /* să rămână fixat la scroll */
-  top: 0;
-  z-index: 100;
-}
-
-/* Brand - linkul cu logo și text */
-.brand {
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: white;
-  font-weight: 700;
-  font-size: 1.25rem;
-  user-select: none;
-  transition: color 0.3s ease;
-}
-
-.brand:hover {
-  color: #0d6efd; /* albastru bootstrap la hover */
-}
-
-/* Logout wrapper - aliniază conținutul la dreapta */
-.logout-wrapper {
-  display: flex;
-  align-items: center;
-}
-
-/* Dacă LogoutButton conține un buton simplu, poți stiliza și el aici */
-.logout-wrapper button {
-  background-color: #dc3545; /* roșu bootstrap */
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  font-size: 1rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  user-select: none;
-}
-
-.logout-wrapper button:hover {
-  background-color: #b02a37;
+  background-color: white; /* fundal normal pentru mesajele citite */
 }

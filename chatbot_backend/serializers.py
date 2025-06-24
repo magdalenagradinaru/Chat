@@ -61,7 +61,7 @@ class ProfileAttachmentSerializer(serializers.ModelSerializer):
 
 # Include email din modelul User (prin relația OneToOneField)..................................
 class UserProfileSerializer(serializers.ModelSerializer):
-    email = serializers.EmailField(source='user.email', read_only=True)  # <-- aceasta linie
+    email = serializers.EmailField(source='user.email', read_only=True)
     username = serializers.CharField(source='user.username', read_only=True)
 
     class Meta:
@@ -112,8 +112,18 @@ from .models import PostMessage
 
 class PostMessageSerializer(serializers.ModelSerializer):
     sender_email = serializers.EmailField(source='sender.email', read_only=True)
+    post_content = serializers.CharField(source='post.content', read_only=True)  # <-- adăugat
 
     class Meta:
         model = PostMessage
-        fields = ['id', 'sender_email', 'recipient', 'post', 'content', 'created_at', 'is_read']
-        read_only_fields = ['sender_email', 'created_at', 'is_read']
+        fields = [
+            'id',
+            'sender_email',
+            'recipient',
+            'post',
+            'post_content',  # <-- inclus aici
+            'content',
+            'created_at',
+            'is_read'
+        ]
+        read_only_fields = ['sender_email', 'created_at', 'is_read', 'post_content']

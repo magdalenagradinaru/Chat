@@ -8,36 +8,68 @@
         "Ce mai faci?",
         "Este cineva aici?",
         "Buna ziua",
-        "O zi buna"
+        "O zi buna",
+        "Hei",
+        "Ce faci?",
+        "Buna seara",
+        "Salutare!"
       ],
       "responses": [
-        "Salut! Bine ai venit pe platforma noastra IT Company! Cum pot sa te ajut? :-) "
+        "Salut! Bine ai venit pe platforma noastra IT Company! Cum pot sa te ajut? 🙂",
+        "Buna! Cu ce te pot ajuta astazi?",
+        "Hei! Suntem aici sa te ajutam. Ce ai dori sa afli?",
+        "Salutare! Întreabă-mă orice despre contul tău sau serviciile noastre."
       ]
     },
     {
       "tag": "goodbye",
-      "patterns": ["Pa", "Ne vedem mai tarziu", "La revedere"],
+      "patterns": [
+        "Pa",
+        "Ne vedem mai tarziu",
+        "La revedere",
+        "Pe curand",
+        "Ne mai auzim",
+        "O seara buna"
+      ],
       "responses": [
-        "La revedere, multumim ca ne-ai vizitat",
-        "O zi placuta",
-        "Pa! Te asteptam din nou!"
+        "La revedere, multumim ca ne-ai vizitat!",
+        "O zi placuta!",
+        "Pa! Te asteptam din nou!",
+        "Succes in ceea ce faci! Ne revedem curand!"
       ]
     },
     {
       "tag": "thanks",
-      "patterns": ["Multumesc", "Iti multumesc", "A fost util", "Multumesc mult!"],
-      "responses": ["Cu placere!", "Oricand!", "Ma bucur ca am putut ajuta"]
+      "patterns": [
+        "Multumesc",
+        "Iti multumesc",
+        "A fost util",
+        "Multumesc mult!",
+        "Mersi",
+        "Esti de ajutor"
+      ],
+      "responses": [
+        "Cu placere!",
+        "Oricand!",
+        "Ma bucur ca am putut ajuta!",
+        "Sunt aici oricand ai nevoie!"
+      ]
     },
     {
       "tag": "login",
       "patterns": [
         "Cum ma loghez?",
         "Unde este pagina de logare?",
-        "Cum accesez contul?"
+        "Cum accesez contul?",
+        "Cum intru in cont?",
+        "Nu stiu cum sa ma autentific",
+        "Vreau sa ma conectez"
       ],
       "responses": [
-        "Pentru a te loga, acceseaza pagina de login din meniul principal. Va trebui sa introduci numele de utilizator si parola. Daca nu ai un cont, poti sa te inregistrezi dand click pe 'Inregistreaza-te'.",
-        "Pentru a accesa contul, mergi pe pagina de login si introduce credentile tale. Daca ai uitat parola, apasa pe 'Am uitat parola' pentru a o reseta."
+        "Pentru a te loga, acceseaza pagina de login din meniul principal. Va trebui sa introduci numele de utilizator si parola.",
+        "Daca nu ai un cont, poti sa te inregistrezi dand click pe 'Inregistreaza-te'.",
+        "Mergi pe pagina de login si introdu credentialele tale. Daca ai uitat parola, apasa pe 'Am uitat parola' pentru resetare.",
+        "Autentificarea se face din coltul dreapta sus al paginii principale."
       ]
     },
     {
@@ -45,11 +77,16 @@
       "patterns": [
         "Cum imi editez profilul?",
         "Vreau sa imi actualizez informatiile personale",
-        "Pot sa imi schimb adresa de email?"
+        "Pot sa imi schimb adresa de email?",
+        "Cum pot schimba parola?",
+        "Unde pot modifica profilul?",
+        "Cum imi modific datele personale?"
       ],
       "responses": [
-        "Pentru a-ti edita profilul, acceseaza pagina de setari a profilului dupa ce te loghezi. Poti actualiza detalii precum numele, emailul si numarul de telefon.",
-        "Pentru a modifica informatiile, mergi pe pagina setarilor profilului. Vei putea actualiza detaliile tale personale, dar emailul si categoria sunt fixe."
+        "Pentru a-ti edita profilul, acceseaza pagina profilului dupa autentificare.",
+        "Modificarea informatiilor se face in sectiunea 'Profil'. Emailul si categoria sunt fixe.",
+        "Schimbarile se pot salva dupa completarea formularului din pagina ta de profil.",
+        "Asigura-te ca esti logat pentru a putea accesa si edita profilul tau."
       ]
     },
     {
@@ -57,11 +94,16 @@
       "patterns": [
         "Cat de sigur este contul meu?",
         "Ce masuri de securitate sunt implementate?",
-        "Cum imi protejez contul?"
+        "Cum imi protejez contul?",
+        "Este contul meu protejat?",
+        "Platforma e sigura?",
+        "Parolele sunt criptate?"
       ],
       "responses": [
-        "Luam securitatea in serios. Contul tau este protejat prin criptare puternica si oferim autentificare in doi pasi (2FA) pentru un plus de siguranta.",
-        "Contul tau este securizat cu criptare si autentificare in doi pasi. Asigura-te intotdeauna ca parola ta este puternica si unica."
+        "Luam securitatea in serios. Contul tau este protejat prin criptare si autentificare in doi pasi (2FA).",
+        "Parolele sunt stocate in siguranta, iar conexiunile sunt criptate.",
+        "Recomandam o parola puternica si activarea 2FA pentru siguranta maxima.",
+        "Da, folosim cele mai bune practici de securitate pentru a proteja datele tale."
       ]
     },
     {
@@ -69,11 +111,16 @@
       "patterns": [
         "Cum pot pune intrebari?",
         "Cum interacționez cu chatbot-ul?",
-        "Ma poti ajuta cu ceva?"
+        "Ma poti ajuta cu ceva?",
+        "Cum functioneaza acest chatbot?",
+        "Ce pot intreba aici?",
+        "Ma poti ghida?"
       ],
       "responses": [
-        "Poti intreba orice legat de platforma noastra! Incearca sa intrebi despre contul tau, setarile profilului sau functionalitatile disponibile.",
-        "Pentru a pune o intrebare, scrie pur si simplu intrebarea ta. Daca chatbot-ul nu stie raspunsul, va incerca sa ofere ajutor general sau va trimite cererea ta catre echipa de suport."
+        "Poti intreba orice despre platforma: conturi, profiluri, companii sau joburi.",
+        "Scrie pur si simplu o intrebare, iar eu voi incerca sa iti ofer un raspuns util.",
+        "Daca nu stiu raspunsul, trimit cererea catre echipa de suport.",
+        "Sunt aici pentru a te ajuta! Ce ai dori sa afli?"
       ]
     },
     {
@@ -81,11 +128,15 @@
       "patterns": [
         "Cum interacționez cu companiile?",
         "Ce pot face cu companiile?",
-        "Cum pot contacta o companie?"
+        "Cum pot contacta o companie?",
+        "Cum pot aplica la joburile de la companii?",
+        "Pot trimite un mesaj unei companii?"
       ],
       "responses": [
-        "Poti naviga printre companii, vizualiza anunturi de joburi sau le poti contacta direct prin sectiunea 'Contact' de pe pagina lor de profil.",
-        "Pentru a interacționa cu companiile, poti aplica pentru joburile listate pe profilul lor sau le poti contacta folosind detaliile de contact furnizate."
+        "Poti vizualiza profilul companiei, anunturile lor si sa le contactezi prin sectiunea 'Contact'.",
+        "Aplicarea la joburi se face direct din pagina companiei.",
+        "Companiile pot fi contactate prin email sau mesaj direct, daca ofera aceasta optiune.",
+        "Tot ce trebuie sa faci este sa accesezi pagina companiei care te intereseaza."
       ]
     },
     {
@@ -93,27 +144,48 @@
       "patterns": [
         "Ce articole aveti?",
         "Ce tipuri de articole exista?",
-        "Ce promovati?"
+        "Ce promovati?",
+        "Ce pot gasi pe platforma?",
+        "Ce tipuri de servicii oferiti?"
       ],
       "responses": [
-        "Vanam solutii IT, inclusiv job-uri despre dezvoltare software, integrare de sisteme si solutii cloud."
+        "Promovam solutii IT: dezvoltare software, integrare de sisteme, servicii cloud si multe altele.",
+        "Pe platforma gasesti articole legate de joburi, companii si oportunitati in domeniul IT.",
+        "Avem informatii despre cele mai recente joburi si proiecte IT.",
+        "Oferim acces la articole si noutati despre tehnologie si industrie."
       ]
     },
     {
       "tag": "oferts",
-      "patterns": [],
-      "responses": []
+      "patterns": [
+        "Ce oferte sunt disponibile?",
+        "Aveti promotii?",
+        "Exista reduceri sau oferte speciale?",
+        "Ce beneficii ofera platforma?",
+        "Oferiti ceva gratuit?"
+      ],
+      "responses": [
+        "Verifica sectiunea de oferte speciale pentru utilizatori noi si companii.",
+        "Din cand in cand oferim beneficii promotionale pentru parteneri activi.",
+        "Nu rata reducerile pentru servicii premium – urmareste pagina principala!",
+        "La inscriere, beneficiezi de acces gratuit la anumite functionalitati."
+      ]
     },
     {
       "tag": "delivery",
       "patterns": [
         "Oferte job",
         "Lucru",
-        "angajare"
+        "Angajare",
+        "Joburi disponibile",
+        "Unde pot aplica?",
+        "Exista posturi vacante?"
       ],
       "responses": [
-        "Pentru a beneficia de anunturile actuale si disponibile de job, introduce numele companiei care te intereseaza si noi iti oferim informatia disponibila.",
-        "Care este numele companiei care te-ar interesa?"
+        "Pentru a beneficia de anunturile actuale de job, introdu numele companiei sau domeniul care te intereseaza.",
+        "Care este compania sau pozitia care te-ar interesa?",
+        "Gasesti joburi active pe paginile companiilor listate.",
+        "Aplicarea se face direct prin profilul jobului sau al companiei."
       ]
     },
     {
@@ -121,11 +193,16 @@
       "patterns": [
         "Spune-mi o gluma!",
         "Spune-mi ceva amuzant!",
-        "Stii vreo gluma?"
+        "Stii vreo gluma?",
+        "Zi o gluma IT",
+        "Ai glume despre programatori?",
+        "Fa-ma sa rad"
       ],
       "responses": [
         "De ce a mers programatorul la banca? Pentru ca isi pierduse 'cache-ul'.",
-        "De ce prefera programatorii modul intunecat? Pentru ca lumina atrage bug-uri."
+        "De ce prefera programatorii modul intunecat? Pentru ca lumina atrage bug-uri.",
+        "Cati programatori trebuie sa schimbe un bec? Niciunul, e o problema hardware.",
+        "De ce nu pot programatorii merge in padure? Pentru ca se pierd in ramuri."
       ]
     }
   ]

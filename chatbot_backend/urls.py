@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/messages/inbox/', InboxMessagesView.as_view(), name='inbox-messages'),
     path('api/messages/<int:pk>/mark_read/', InboxMessagesView.as_view(), name='mark-message-read'),
     path('api/profile/<str:username>/', PublicProfileView.as_view(), name='public-profile'),
+    path('api/messages/<int:pk>/', InboxMessagesView.as_view()),  # pentru DELETE sau PATCH
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

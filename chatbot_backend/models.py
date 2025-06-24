@@ -66,7 +66,6 @@ class Post(models.Model):
     def __str__(self):
         return f"Post by {self.author.username} on {self.created_at}"
 
-User = get_user_model()
 
 
 class PostMessage(models.Model):

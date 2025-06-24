@@ -1,5 +1,4 @@
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.generics import RetrieveAPIView
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
@@ -33,13 +32,13 @@ class ChatViewSet(ViewSet):
         user_message = request.data.get('message')
 
         if not user_message:
-            return Response({'error': 'No message provided'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Nu au fost scrise mesaje'}, status=status.HTTP_400_BAD_REQUEST)
 
         try:
             bot_response = get_chatbot_response(user_message)
             return Response({'response': bot_response}, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response({'error': f'Error generating chatbot response: {str(e)}'},
+            return Response({'error': f'Eroare la generare răspunsului de chatbot: {str(e)}'},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
@@ -71,7 +70,7 @@ class LoginView(APIView):
                     }
                 }, status=status.HTTP_200_OK)
             else:
-                return Response({'error': 'Username sau parolă incorectă'}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({'error': 'Nume de utilizator sau parolă incorectă'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -204,11 +203,23 @@ class PostAPIView(APIView):
     def post(self, request):
         content = request.data.get('content')
         if not content:
-            return Response({'error': 'Content is required'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'Este nevoie de conținut'}, status=status.HTTP_400_BAD_REQUEST)
 
         post = Post.objects.create(author=request.user, content=content)
         serializer = PostSerializer(post)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request):
+        post_id = request.data.get("id")
+        try:
+            post = Post.objects.get(id=post_id)
+            if post.author != request.user:
+                return Response({"detail": "Nu ai permisiunea să ștergi această postare."},
+                                status=status.HTTP_403_FORBIDDEN)
+            post.delete()
+            return Response({"detail": "Postarea a fost ștearsă."}, status=status.HTTP_204_NO_CONTENT)
+        except Post.DoesNotExist:
+            return Response({"detail": "Postarea nu a fost găsită."}, status=status.HTTP_404_NOT_FOUND)
 
 
 from .models import PostMessage
@@ -226,7 +237,7 @@ def send_message(request):
 
 
     if not post_id or not content:
-        return Response({"detail": "Post ID and message are required."}, status=400)
+        return Response({"detail": "Este nevoie de ID-ul postării sau de mesaj."}, status=400)
 
 
     try:
@@ -252,9 +263,15 @@ def send_message(request):
     except Post.DoesNotExist:
         return Response({"detail": "Post not found."}, status=404)
     except Exception as e:
-        return Response({"detail": f"Error sending message: {str(e)}"}, status=500)
+        return Response({"detail": f"Eroare la trimiterea mesajului: {str(e)}"}, status=500)
 
 
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import PostMessage
 
 class InboxMessagesView(APIView):
     permission_classes = [IsAuthenticated]
@@ -282,4 +299,16 @@ class InboxMessagesView(APIView):
 
         return Response({'status': 'Mesaj marcat ca citit'}, status=status.HTTP_200_OK)
 
+    def delete(self, request, pk=None):
+        user = request.user
+        if pk is None:
+            return Response({'error': 'ID-ul mesajului este necesar'}, status=status.HTTP_400_BAD_REQUEST)
 
+        try:
+            # Găsește UN mesaj cu id-ul dat și care are ca destinatar utilizatorul curent
+            message = PostMessage.objects.get(id=pk, recipient=user)
+        except PostMessage.DoesNotExist:
+            return Response({'error': 'Mesajul nu există sau nu îți aparține'}, status=status.HTTP_404_NOT_FOUND)
+
+        message.delete()
+        return Response({'status': 'Mesaj șters'}, status=status.HTTP_204_NO_CONTENT)

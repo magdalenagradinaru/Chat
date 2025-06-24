@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const ProfileForm = ({ setUserProfile }) => {
+const ProfileForm = ({ userProfile, setUserProfile }) => {
   const [profile, setProfile] = useState({
     phone_number: "",
     address: "",
@@ -14,7 +14,19 @@ const ProfileForm = ({ setUserProfile }) => {
 
   const [message, setMessage] = useState("");
 
-  /* ───────────── Handlers ───────────── */
+  useEffect(() => {
+    if (userProfile) {
+      setProfile({
+        phone_number: userProfile.phone_number || "",
+        address: userProfile.address || "",
+        education: userProfile.education || "",
+        work_experience: userProfile.work_experience || "",
+        biography: userProfile.biography || "",
+        profile_picture: null,
+        profile_picture_url: userProfile.profile_picture || "",
+      });
+    }
+  }, [userProfile]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +58,6 @@ const ProfileForm = ({ setUserProfile }) => {
     const fd = new FormData();
     allowed.forEach((k) => {
       if (k === "profile_picture") {
-        // trimite poza doar dacă e un fișier (File), nu URL string sau null
         if (profile.profile_picture instanceof File) {
           fd.append(k, profile.profile_picture);
         }
@@ -69,7 +80,6 @@ const ProfileForm = ({ setUserProfile }) => {
         }
       );
       setUserProfile(data);
-      // Actualizăm local state — să resetăm profile_picture (fișierul)
       setProfile((prev) => ({
         ...prev,
         profile_picture: null,
@@ -78,11 +88,9 @@ const ProfileForm = ({ setUserProfile }) => {
       setMessage("Profil actualizat cu succes!");
     } catch (err) {
       console.error(err);
-
       if (err.response && err.response.data) {
         const errors = err.response.data;
         let errorMessages = [];
-
         if (typeof errors === "object" && !Array.isArray(errors)) {
           for (const key in errors) {
             if (Array.isArray(errors[key])) {
@@ -94,42 +102,12 @@ const ProfileForm = ({ setUserProfile }) => {
         } else {
           errorMessages.push(errors.toString());
         }
-
         setMessage(`Eroare la salvare: ${errorMessages.join(" | ")}`);
       } else {
         setMessage("A apărut o eroare la salvare.");
       }
     }
   };
-
-  /* ───────────── Fetch existing profile ───────────── */
-
-  useEffect(() => {
-    (async () => {
-      const token = localStorage.getItem("access");
-      if (!token) return;
-      try {
-        const { data } = await axios.get("http://127.0.0.1:8000/api/profile/", {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-        setProfile((prev) => ({
-          ...prev,
-          phone_number: data.phone_number || "",
-          address: data.address || "",
-          education: data.education || "",
-          work_experience: data.work_experience || "",
-          biography: data.biography || "",
-          profile_picture: null,               // resetăm fișierul încărcat
-          profile_picture_url: data.profile_picture || "", // URL poza curentă
-        }));
-      } catch (err) {
-        console.error(err);
-        setMessage("Nu s-a putut încărca profilul.");
-      }
-    })();
-  }, []);
-
-  /* ───────────── UI ───────────── */
 
   return (
     <form className="card shadow-sm p-4" onSubmit={handleSubmit}>
@@ -142,8 +120,6 @@ const ProfileForm = ({ setUserProfile }) => {
           {message}
         </div>
       )}
-
-      {/* Row 1 */}
       <div className="row g-3">
         <div className="col-md-6">
           <label className="form-label">Număr de telefon</label>
@@ -156,7 +132,6 @@ const ProfileForm = ({ setUserProfile }) => {
             placeholder="+373 699 000 000"
           />
         </div>
-
         <div className="col-md-6">
           <label className="form-label">Adresă fizică</label>
           <input
@@ -169,71 +144,69 @@ const ProfileForm = ({ setUserProfile }) => {
           />
         </div>
       </div>
-
-      {/* Row 2 */}
       <div className="row g-3 mt-3">
         <div className="col-md-6">
           <label className="form-label">Fotografie de profil</label>
-          {/* Afișăm poza curentă dacă există */}
           {profile.profile_picture_url && (
             <div className="mb-2">
               <img
-                src={profile.profile_picture_url}
+                src={profile.profile_picture_url.startsWith("http") ? profile.profile_picture_url : `http://127.0.0.1:8000${profile.profile_picture_url}`}
                 alt="Profil"
-                style={{ maxWidth: "150px", maxHeight: "150px", objectFit: "cover" }}
+                width="100"
+                className="img-thumbnail"
               />
             </div>
           )}
           <input
             type="file"
             className="form-control"
+            name="profile_picture"
             accept="image/*"
             onChange={handleFileChange}
           />
+          <small className="form-text text-muted">
+            Poți încărca o nouă fotografie pentru profil.
+          </small>
         </div>
-
+        <div className="col-md-6">
+          <label className="form-label">Educație / Descriere</label>
+          <textarea
+            className="form-control"
+            name="education"
+            value={profile.education}
+            onChange={handleInputChange}
+            rows="3"
+            placeholder="Educație și alte informații relevante"
+          ></textarea>
+        </div>
+      </div>
+      <div className="row g-3 mt-3">
+        <div className="col-md-6">
+          <label className="form-label">Experiență de muncă / Oportunități oferite</label>
+          <textarea
+            className="form-control"
+            name="work_experience"
+            value={profile.work_experience}
+            onChange={handleInputChange}
+            rows="3"
+            placeholder="Experiență și oferte"
+          ></textarea>
+        </div>
         <div className="col-md-6">
           <label className="form-label">Portofoliu / Website</label>
           <input
-            type="url"
+            type="text"
             className="form-control"
             name="biography"
             value={profile.biography}
             onChange={handleInputChange}
-            placeholder="https://exemplu.com/"
+            placeholder="https://exemplu.com"
           />
         </div>
       </div>
-
-      {/* Row 3 – textareas */}
-      <div className="row g-3 mt-3">
-        <div className="col-12">
-          <label className="form-label">Educație / Descriere</label>
-          <textarea
-            className="form-control"
-            rows="2"
-            name="education"
-            value={profile.education}
-            onChange={handleInputChange}
-          />
-        </div>
-
-        <div className="col-12">
-          <label className="form-label">Experiență de lucru/ Oportunități oferite</label>
-          <textarea
-            className="form-control"
-            rows="2"
-            name="work_experience"
-            value={profile.work_experience}
-            onChange={handleInputChange}
-            placeholder="Intern programator 1C, ULTRA (2024-prezent)"
-          />
-        </div>
-      </div>
-
-      <div className="text-end mt-4">
-        <button type="submit" className="btn btn-primary px-4">
-          Salvează
+      <div className="mt-4 text-end">
+        <button type="submit" className="btn btn-primary">
+          Salvează modificările
         </button>
       </div>
     </form>

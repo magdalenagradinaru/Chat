@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import '../css/cover.css';  // Importă fișierul CSS
+import '../css/cover.css';
 import Layout from "../components/Layout";
 
 const Inbox = () => {
@@ -21,7 +21,6 @@ const Inbox = () => {
           const data = await response.json();
           setMessages(data);
 
-          // Calculează câte sunt necitite
           const newMessages = data.filter(msg => !msg.is_read);
           setNewMessagesCount(newMessages.length);
         } else {
@@ -35,7 +34,39 @@ const Inbox = () => {
     fetchMessages();
   }, [token]);
 
-  // Marchează un mesaj ca citit
+  // Aduce conținutul postărilor pentru fiecare mesaj care are post_id
+const [fetchedPostContents, setFetchedPostContents] = useState(false);
+
+useEffect(() => {
+  const fetchPostContents = async () => {
+    const updatedMessages = await Promise.all(messages.map(async (msg) => {
+      if (msg.post_id && !msg.post_content) {
+        try {
+          const res = await fetch(`http://localhost:8000/api/posts/${msg.post_id}/`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          if (res.ok) {
+            const postData = await res.json();
+            return { ...msg, post_content: postData.content };
+          }
+        } catch (err) {
+          console.error("Eroare la încărcarea conținutului postării:", err);
+        }
+      }
+      return msg;
+    }));
+    setMessages(updatedMessages);
+    setFetchedPostContents(true);
+  };
+
+  if (!fetchedPostContents && messages.some(m => m.post_id && !m.post_content)) {
+    fetchPostContents();
+  }
+}, [messages, token, fetchedPostContents]);
+
+
   const handleMarkAsRead = async (msgId) => {
     try {
       const response = await fetch(`http://localhost:8000/api/messages/${msgId}/mark_read/`, {
@@ -48,14 +79,11 @@ const Inbox = () => {
       });
 
       if (response.ok) {
-        // Actualizează mesajul local în listă
         setMessages(prevMessages =>
           prevMessages.map(msg =>
             msg.id === msgId ? { ...msg, is_read: true } : msg
           )
         );
-
-        // Scade contorul
         setNewMessagesCount(prevCount => Math.max(prevCount - 1, 0));
       } else {
         console.error('Eroare la actualizarea mesajului ca citit');
@@ -65,45 +93,71 @@ const Inbox = () => {
     }
   };
 
-  return (
-  <Layout>
-    <div className="inbox-container">
-      <h1>
-        Mesaje primite{' '}
-        {newMessagesCount > 0 && (
-          <span className="notification-badge">{newMessagesCount}</span>
-        )}
-      </h1>
 
-      {messages.length === 0 ? (
-        <p className="no-messages">Nu ai niciun mesaj.</p>
-      ) : (
-        <ul>
-          {messages.map((msg) => (
-           <li
+const handleDeleteMessage = async (msgId) => {
+  try {
+    const response = await fetch(`http://localhost:8000/api/messages/${msgId}/`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      setMessages(prevMessages => prevMessages.filter(msg => msg.id !== msgId));
+    } else {
+      console.error('Eroare la ștergerea mesajului');
+    }
+  } catch (error) {
+    console.error('Eroare rețea la ștergerea mesajului:', error);
+  }
+};
+
+  return (
+    <Layout>
+      <div className="inbox-container">
+        <h1>
+          Mesaje primite{' '}
+          {newMessagesCount > 0 && (
+            <span className="notification-badge">{newMessagesCount}</span>
+          )}
+        </h1>
+
+        {messages.length === 0 ? (
+          <p className="no-messages">Nu ai niciun mesaj.</p>
+        ) : (
+          <ul>
+            {messages.map((msg) => (
+             <li
   key={msg.id}
   className={msg.is_read ? 'read' : 'unread'}
-  onClick={() => {
-    if (!msg.is_read) {
-      handleMarkAsRead(msg.id);
-    }
-  }}
   style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ddd' }}
 >
-  <strong>De la:</strong> {msg.sender_email}<br />
-  <strong>Mesaj:</strong> {msg.content}<br />
-  {msg.post_title && (
-    <div>
-      <strong>Postare:</strong> {msg.post_title}
-    </div>
-  )}
-  <small>{new Date(msg.created_at).toLocaleString()}</small>
+  <div onClick={() => !msg.is_read && handleMarkAsRead(msg.id)}>
+    <strong>De la:</strong> {msg.sender_email}<br />
+    <strong>Mesaj:</strong> {msg.content}<br />
+    {msg.post && (
+  <div>
+    <strong>Postare:</strong><br />
+    <span><em>{msg.post_content?.split('. ')[0]}.</em></span> {/* Doar prima propoziție */}
+  </div>
+)}
+
+    <br />
+    <small>{new Date(msg.created_at).toLocaleString()}</small>
+  </div>
+  <button
+    onClick={() => handleDeleteMessage(msg.id)}
+    style={{ marginTop: '5px', backgroundColor: 'red', color: 'white', border: 'none', padding: '5px 10px', cursor: 'pointer' }}
+  >
+    Șterge
+  </button>
 </li>
 
-          ))}
-        </ul>
-      )}
-    </div>
+            ))}
+          </ul>
+        )}
+      </div>
     </Layout>
   );
 };
