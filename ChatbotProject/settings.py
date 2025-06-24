@@ -94,10 +94,10 @@ CELERY_TIMEZONE = 'UTC'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
+EMAIL_PORT = 
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'gradinaru.madalina8@gmail.com'
-EMAIL_HOST_PASSWORD = 'gbqk aqyh upsd awzh'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MEDIA_URL = '/media/'
@@ -137,7 +137,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'mydatabase',
         'USER': 'madalinagr',
-        'PASSWORD': 'decembrie2002',
+        'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '5432',
     }
@@ -206,7 +206,7 @@ import smtplib
 try:
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
-    server.login('gradinaru.madalina8@gmail.com', 'gbqk aqyh upsd awzh')
+    server.login('', '')
     print("SMTP autentificat cu succes.")
     server.quit()
 except Exception as e:
